@@ -1,2 +1,0 @@
-# CypressAutomation
-Cypress Projects
