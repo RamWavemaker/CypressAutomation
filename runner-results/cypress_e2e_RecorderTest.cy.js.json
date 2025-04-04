@@ -1,0 +1,10 @@
+{
+  "suites": 1,
+  "tests": 1,
+  "passes": 0,
+  "pending": 0,
+  "failures": 1,
+  "start": "2025-04-04T07:46:42.007Z",
+  "duration": 26239,
+  "file": "cypress/e2e/RecorderTest.cy.js"
+}
