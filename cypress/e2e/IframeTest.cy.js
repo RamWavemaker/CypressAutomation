@@ -65,7 +65,7 @@ describe.skip('Ifrmae Test', () => {
 });
 
 
-describe('Nested iframe test: click and type into W3Schools search', () => {
+describe(' Iframe W3Schools Test', () => {
   it('Clicks search icon and types into tnb-google-search-input', () => {
     cy.visit('https://www.w3schools.com/tags/tryit.asp?filename=tryhtml_iframe');
     cy.frameLoaded('#iframeResult');
