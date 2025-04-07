@@ -21,3 +21,14 @@ import 'cypress-xpath';
 import '@4tw/cypress-drag-drop'
 
 import "allure-cypress";
+
+Cypress.on('uncaught:exception', (err, runnable) => {
+    // Ignore renderProps() bug from Allure
+    if (err.message.includes('renderProps is not a function')) {
+      return false; // prevents test from failing
+    }
+  
+    // Let other exceptions fail the test
+    return true;
+});
+  

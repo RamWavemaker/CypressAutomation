@@ -1,10 +1,10 @@
 {
   "suites": 2,
   "tests": 2,
-  "passes": 1,
+  "passes": 2,
   "pending": 0,
-  "failures": 1,
-  "start": "2025-04-04T07:45:01.920Z",
-  "duration": 89207,
+  "failures": 0,
+  "start": "2025-04-07T04:35:37.180Z",
+  "duration": 87896,
   "file": "cypress/e2e/BasicTests.cy.js"
 }

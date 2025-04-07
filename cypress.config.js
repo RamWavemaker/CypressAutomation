@@ -7,8 +7,10 @@ module.exports = defineConfig({
   projectId: 'czgj9f',
   video: true,
   videoUploadOnPasses: true,
+  screenshotOnRunFailure: true,
   e2e: {
     defaultCommandTimeout: 10000,
+    chromeWebSecurity: false,
     setupNodeEvents(on, config) {
       allureCypress(on, config, {
         resultsDir: "allure-results",

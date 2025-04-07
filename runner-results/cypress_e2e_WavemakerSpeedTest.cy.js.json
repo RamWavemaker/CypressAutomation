@@ -1,0 +1,10 @@
+{
+  "suites": 1,
+  "tests": 3,
+  "passes": 3,
+  "pending": 0,
+  "failures": 0,
+  "start": "2025-04-07T04:37:08.606Z",
+  "duration": 39547,
+  "file": "cypress/e2e/WavemakerSpeedTest.cy.js"
+}

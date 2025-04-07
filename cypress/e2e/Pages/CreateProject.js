@@ -1,7 +1,7 @@
 
 class CreateProject{
     clickAppsTab() {
-        cy.get("a[aria-label='Apps']").click();
+        cy.get("a[name='appsLink']").should('be.visible').should('not.be.disabled').click();
     }
 
     generateProjectName(){
@@ -11,7 +11,7 @@ class CreateProject{
 
     create(){
         this.clickAppsTab();
-        cy.get("button[name='buttonApplicationCreate']").click();
+        cy.get("button[name='buttonApplicationCreate']").should('be.visible').click();
         cy.xpath("//li[contains(@class, 'app-list-item')]//h2[text()='Web']").click();
         cy.get("[aria-label='Continue']").click();
         const projectName = this.generateProjectName();

@@ -4,6 +4,35 @@ class ProjectWorkspace{
         cy.get("[name='wm-save-design-workspace']").click();
     }
 
+    saveWorkSpaceApi(pageName,userEmail,userPassword){
+        cy.url().then((currentUrl) => {
+            const urlParams = new URLSearchParams(new URL(currentUrl).search);
+            const projectId = urlParams.get('project-id');
+    
+            if (projectId) {
+                const apiUrl = `https://www.wavemakeronline.com/studio/services/projects/${projectId}/pages/${pageName}/${pageName}.html`;
+                cy.request({
+                    method: 'POST',
+                    url: apiUrl,
+                    body: {},
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    auth: {
+                        username: userEmail,
+                        password: userPassword,
+                    },
+                }).then((response) => {
+                    // Handle the response from the API
+                    cy.log('API Response:', response.body);
+                    expect(response.status).to.eq(200); // Assert the response status
+                });
+            } else {
+                cy.log('project-id not found in the current URL');
+            }
+        });
+    }
+
     preview(projectName,userEmail,userPassword) {
         cy.url().then((currentUrl) => {
             const urlParams = new URLSearchParams(new URL(currentUrl).search);
