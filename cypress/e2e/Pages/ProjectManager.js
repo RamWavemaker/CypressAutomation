@@ -1,9 +1,9 @@
+class ProjectManager {
 
-class CreateProject{
     clickAppsTab() {
         cy.get("a[name='appsLink']").should('be.visible').should('not.be.disabled').click();
     }
-
+    
     generateProjectName(){
         const randomName = Math.random().toString(36).substring(2, 8);
         return`Cy_${randomName}`;
@@ -23,4 +23,5 @@ class CreateProject{
         return projectName;
     }
 }
-export default new CreateProject();
+
+export default new ProjectManager();

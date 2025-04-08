@@ -1,7 +1,7 @@
 import 'cypress-xpath';
 import LoginPage from './Pages/LoginPage';
-import CreateProject from './Pages/CreateProject';
 import DndWidget from './Pages/DndWidget';
+import ProjectManager from './Pages/ProjectManager';
 import ProjectWorkspace from './Pages/ProjectWorkspace';
 import $ from 'jquery';
 
@@ -29,7 +29,7 @@ describe('Basic Test', () => {
   });
   it('Verifies the title', () => {
       LoginPage.visit("https://www.wavemakeronline.com/");
-      let projectName = CreateProject.create();
+      let projectName = ProjectManager.create();
       DndWidget.performDndWidget('button');
       ProjectWorkspace.saveWorkSpace();
       cy.url().then((url) => {
@@ -70,7 +70,7 @@ describe('Test LDAP ', () => {
   });
   it('Verifies Ldap security', () => {
       LoginPage.visit("https://www.wavemakeronline.com/");
-      let projectName = CreateProject.create();
+      let projectName = ProjectManager.create();
       DndWidget.performDndWidget('button');
       //Navigate to security settings
       cy.get('button[name="wm-category-settings"]').click();

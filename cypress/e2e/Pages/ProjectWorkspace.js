@@ -4,6 +4,26 @@ class ProjectWorkspace{
         cy.get("[name='wm-save-design-workspace']").click();
     }
 
+    goToPages(){
+        cy.get("[name='wm-category-pages']").click();
+    }
+
+    goToDatabase(){
+        cy.get("[name='wm-category-databases']").click();
+    }
+
+    goToJavaServices(){
+        cy.get("[name='wm-category-java-services']").click();
+    }
+
+    goToApiDesigner(){
+        cy.get("[name='wm-category-apis']").click();
+    }
+
+    goToSettings(){
+        cy.get("[name='wm-category-settings']").click();
+    }
+
     saveWorkSpaceApi(pageName,userEmail,userPassword){
         cy.url().then((currentUrl) => {
             const urlParams = new URLSearchParams(new URL(currentUrl).search);
@@ -72,26 +92,5 @@ class ProjectWorkspace{
             }
         });
     }
-    
-    goToPages(){
-        cy.get("[name='wm-category-pages']").click();
-    }
-
-    goToDatabase(){
-        cy.get("[name='wm-category-databases']").click();
-    }
-
-    goToJavaServices(){
-        cy.get("[name='wm-category-java-services']").click();
-    }
-
-    goToApiDesigner(){
-        cy.get("[name='wm-category-apis']").click();
-    }
-
-    goToSettings(){
-        cy.get("[name='wm-category-settings']").click();
-    }
-
 }
 export default new ProjectWorkspace();

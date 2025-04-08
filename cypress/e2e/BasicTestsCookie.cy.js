@@ -1,7 +1,7 @@
 import 'cypress-xpath';
 import LoginPage from './Pages/LoginPage';
-import CreateProject from './Pages/CreateProject';
 import DndWidget from './Pages/DndWidget';
+import ProjectManager from './Pages/ProjectManager';
 import ProjectWorkspace from './Pages/ProjectWorkspace';
 
 before(() => {
@@ -38,7 +38,7 @@ beforeEach(() => {
 describe('Basic Test - Cookie Based', () => {
   it('Verifies the title and session cookies', () => {
     LoginPage.visit("https://www.wavemakeronline.com/");
-    let projectName = CreateProject.create();
+    let projectName = ProjectManager.create();
     DndWidget.performDndWidget('button');
 
     ProjectWorkspace.saveWorkSpace();
@@ -59,7 +59,7 @@ describe('Basic Test - Cookie Based', () => {
 describe('Test LDAP - Cookie Based', () => {
   it('Verifies LDAP security and cookies', () => {
     LoginPage.visit("https://www.wavemakeronline.com/");
-    let projectName = CreateProject.create();
+    let projectName = ProjectManager.create();
     DndWidget.performDndWidget('button');
 
     // Navigate to security settings

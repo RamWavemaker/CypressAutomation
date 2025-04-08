@@ -1,10 +1,10 @@
 import 'cypress-xpath';
 import LoginPage from './Pages/LoginPage';
-import CreateProject from './Pages/CreateProject';
 import DndWidget from './Pages/DndWidget';
 import ProjectWorkspace from './Pages/ProjectWorkspace';
 import $ from 'jquery';
 import 'cypress-iframe';
+import ProjectManager from './Pages/ProjectManager';
 
 const userCredentials = {
     email: 'ramcharan.kasinaboina@wavemaker.com',
@@ -31,7 +31,7 @@ describe.skip('Ifrmae Test', () => {
   });
   it.skip('Verifies the title', () => {
       LoginPage.visit("https://www.wavemakeronline.com/");
-      let projectName = CreateProject.create();
+      let projectName = ProjectManager.create();
       DndWidget.performDndWidget('iframe');
       cy.xpath("//span[@class='wm-heading' and text()='Page Structure']").click();
       cy.get("[name='wm-widget-group-widgets-tree'] input").type('iframe1');

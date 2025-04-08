@@ -4,7 +4,7 @@
   "passes": 3,
   "pending": 0,
   "failures": 0,
-  "start": "2025-04-07T06:18:35.388Z",
-  "duration": 39621,
+  "start": "2025-04-08T05:39:56.238Z",
+  "duration": 48519,
   "file": "cypress/e2e/WavemakerSpeedTest.cy.js"
 }

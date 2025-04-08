@@ -1,9 +1,9 @@
 import 'cypress-xpath';
 import LoginPage from './Pages/LoginPage';
-import CreateProject from './Pages/CreateProject';
 import DndWidget from './Pages/DndWidget';
 import ProjectWorkspace from './Pages/ProjectWorkspace';
 import $ from 'jquery';
+import ProjectManager from './Pages/ProjectManager';
 
 describe('WaveMaker Test Suite', () => {
     let cookies = [];
@@ -36,7 +36,7 @@ describe('WaveMaker Test Suite', () => {
     it('Verifies the title', () => {
           LoginPage.visit("https://www.wavemakeronline.com/");
           LoginPage.login('ramcharan.kasinaboina@wavemaker.com','Wavemaker@Ram123');
-          let projectName = CreateProject.create();
+          let projectName = ProjectManager.create();
           DndWidget.performDndWidget('button');
           ProjectWorkspace.saveWorkSpace();
           cy.url().then((url) => {
