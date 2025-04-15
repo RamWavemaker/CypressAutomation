@@ -30,21 +30,9 @@ import 'cypress-iframe';
 
 /// <reference types="cypress-xpath" />
 
-Cypress.Commands.add('getframe',(iframe)=>{
-    return cy.get(iframe)
-    .its('0.contentDocument.body')
-    .should('be.visible')
+Cypress.Commands.add('getIframeBody', (iframeSelector = 'iframe') => {
+  return cy
+    .get(iframeSelector)
+    .its('0.contentDocument.body').should('not.be.empty')
     .then(cy.wrap);
 });
-
-Cypress.Commands.add('getIframe', (selector) => {
-    return cy
-      .get(selector)
-      .should($iframe => {
-        expect($iframe.contents().find('body')).to.exist;
-      })
-      .then($iframe => {
-        return cy.wrap($iframe.contents().find('body'));
-      });
-  });
-  

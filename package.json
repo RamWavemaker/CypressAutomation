@@ -16,11 +16,13 @@
     "@types/node": "^22.14.0",
     "allure-cypress": "^3.2.1",
     "cypress": "^14.2.1",
-    "cypress-ifram1e": "^1.0.1",
+    "cypress-iframe": "^1.0.1",
     "cypress-xpath": "^2.0.1",
     "jquery": "^3.7.1"
   },
   "dependencies": {
-    "cypress-parallel": "^0.15.0"
+    "aws-sdk": "^2.1692.0",
+    "cypress-parallel": "^0.15.0",
+    "dotenv": "^16.4.7"
   }
 }

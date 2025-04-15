@@ -44,7 +44,7 @@ describe.skip('Ifrmae Test', () => {
       cy.url().then((url) => {
         cy.log("Original url is " + url); 
         // After capturing the original URL, perform other actions
-        ProjectWorkspace.preview(projectName,"ramcharan.kasinaboina@wavemaker.com","Wavemaker@Ram123");
+        ProjectWorkspace.preview("ramcharan.kasinaboina@wavemaker.com","Wavemaker@Ram123");
         cy.url().then((url) =>{
           cy.origin('https://docs.wavemaker.com', () => {
             cy.visit('https://docs.wavemaker.com/learn/');

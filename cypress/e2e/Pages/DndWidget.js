@@ -57,7 +57,7 @@ class DndWidget {
             };
 
             // Execute the drag and drop
-            win.jQuery(`li[name='wm-widget-${widgetName}']`).simulateDragDrop({
+            win.jQuery(`li[data-widget-type='wm-${widgetName}']`).simulateDragDrop({
                 dropTarget: win.jQuery(".app-page-content"),
             });
         });
@@ -66,6 +66,20 @@ class DndWidget {
     performDndWidget(widgetName) {
         this.searchWidget(widgetName);
         this.dragAndAssert(widgetName);
+    }
+
+    datatableDrop(widgetName){
+        this.performDndWidget(widgetName);
+        cy.get("div[name='wms-source-data-source'] input").type('hrdb {enter}');
+        cy.get("div[name='wms-source-data-operation'] input").type("User {enter}");
+        cy.get("input[name='variable-name-input']").clear().type('user ');
+        cy.get("input[name='maxresults-input']").clear().type('2');
+        cy.get("[name='btn-next-page']").click();
+        cy.get("#wms-tpl-editable-grid").click();
+        cy.get("[name='btn-next-page']").click();
+        cy.get("#wms-nav-Basic").click();
+        cy.get('[name="btn-next-page"]').click();
+        cy.get('[name="btn-next-page"]').click();
     }
 }
 

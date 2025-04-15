@@ -42,7 +42,7 @@ describe('WaveMaker Test Suite', () => {
           cy.url().then((url) => {
             cy.log("Original url is " + url); 
             // After capturing the original URL, perform other actions
-            ProjectWorkspace.preview(projectName,"ramcharan.kasinaboina@wavemaker.com","Wavemaker@Ram123");
+            ProjectWorkspace.preview("ramcharan.kasinaboina@wavemaker.com","Wavemaker@Ram123");
             cy.get("button[name='button1']").should('be.visible');
           });
       });
