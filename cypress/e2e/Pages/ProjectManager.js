@@ -9,8 +9,7 @@ class ProjectManager {
         return`Cy_${randomName}`;
     }
 
-
-    generateProjectName(projectName){
+    generateZipProjectName(projectName){
         return `Cy_${projectName}`;
     }
 
@@ -24,8 +23,18 @@ class ProjectManager {
         cy.get("[aria-label='Continue']").click();
         cy.get('button[name="doneBtn_wizardCreateProject"]').click();
         cy.get("div[class='wm-application-view']").should('be.visible');
-        cy.wait(5000);
         return projectName;
+    }
+
+    createPrefab(){
+      cy.get("a[name='prefabsLink']").should('be.visible').should('not.be.disabled').click();
+      cy.get("[name='buttonCreatePrefab']").should('be.visible').click();
+      const projectName = this.generateProjectName();
+      cy.get("input[name='textBoxProjectName_formWidget']").should('be.visible').type(projectName);
+      cy.get("textarea[name='description_formWidget']").should('be.visible').type(projectName);
+      cy.get("button[name='nextBtn_wizardCreatePrefab']").should('be.visible').click();
+      cy.get("button[name='doneBtn_wizardCreatePrefab']").should('be.visible').click();
+      return projectName;
     }
 
     projectDetails(studioProjectId) {

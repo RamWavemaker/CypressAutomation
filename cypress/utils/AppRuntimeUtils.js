@@ -20,7 +20,7 @@ class AppRuntimeUtils{
       return cy.task('fileExists', localDownloadPath).should('eq', true);
     }).then(()=>{
       // let projectName = ProjectManager.generateProjectName();
-      let projectName = ProjectManager.generateProjectName(fileName.replace(/\.zip$/i, ''));
+      let projectName = ProjectManager.generateZipProjectName(fileName.replace(/\.zip$/i, ''));
       return ProjectManager.importWavemakerProject(fileName,projectType,projectName);
     })
     .then((studioProjectId)=> {

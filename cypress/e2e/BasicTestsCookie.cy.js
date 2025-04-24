@@ -39,7 +39,7 @@ describe('Basic Test - Cookie Based', () => {
   it('Verifies the title and session cookies', () => {
     LoginPage.visit("https://www.wavemakeronline.com/");
     let projectName = ProjectManager.create();
-    DndWidget.performDndWidget('button');
+    DndWidget.performDndWidget('button','PAGE');
 
     ProjectWorkspace.saveWorkSpace();
     cy.url().then((url) => {
@@ -60,7 +60,7 @@ describe('Test LDAP - Cookie Based', () => {
   it('Verifies LDAP security and cookies', () => {
     LoginPage.visit("https://www.wavemakeronline.com/");
     let projectName = ProjectManager.create();
-    DndWidget.performDndWidget('button');
+    DndWidget.performDndWidget('button','PAGE');
 
     // Navigate to security settings
     cy.get('button[name="wm-category-settings"]').click();
