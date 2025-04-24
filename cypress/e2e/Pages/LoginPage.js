@@ -26,6 +26,30 @@ class LoginPage {
         this.enterPassword(password);
         this.clickLogin();
     }
+
+    loginApi(username,password){
+        return cy.request({
+            method: 'POST',
+            url: 'https://www.wavemakeronline.com/login/authenticate',
+            form: true,
+            body: {
+              j_username: username,
+              j_password: password
+            },
+            followRedirect: false,
+        }).then((response) => {
+            expect(response.status).to.eq(302);
+            const cookies = response.headers['set-cookie'];
+            const jsessionId = cookies
+              .find(cookie => cookie.startsWith('JSESSIONID'))
+              .split(';')[0];
+            const auth_cookie = cookies.find(cookie => cookie.startsWith('auth_cookie')).split(';')[0];
+            cy.log(jsessionId);
+        
+            Cypress.env('CJSESSIONID', jsessionId.split('=')[1]);
+            Cypress.env('Cauth_cookie',auth_cookie.split('=')[1]);
+        });
+    }
 }
 
 export default new LoginPage();

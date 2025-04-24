@@ -39,12 +39,12 @@ describe('Basic Test - Cookie Based', () => {
   it('Verifies the title and session cookies', () => {
     LoginPage.visit("https://www.wavemakeronline.com/");
     let projectName = ProjectManager.create();
-    DndWidget.performDndWidget('button');
+    DndWidget.performDndWidget('button','PAGE');
 
     ProjectWorkspace.saveWorkSpace();
     cy.url().then((url) => {
       cy.log("Original URL is " + url);
-      ProjectWorkspace.preview(projectName,"anilkumar.akkaraveni@wavemaker.com","2907@WM#Studio");
+      ProjectWorkspace.preview("anilkumar.akkaraveni@wavemaker.com","2907@WM#Studio");
       cy.get("button[name='button1']").should('be.visible');
       cy.wait(5000);
       cy.visit(url, { failOnStatusCode: false });
@@ -60,7 +60,7 @@ describe('Test LDAP - Cookie Based', () => {
   it('Verifies LDAP security and cookies', () => {
     LoginPage.visit("https://www.wavemakeronline.com/");
     let projectName = ProjectManager.create();
-    DndWidget.performDndWidget('button');
+    DndWidget.performDndWidget('button','PAGE');
 
     // Navigate to security settings
     cy.get('button[name="wm-category-settings"]').click();
@@ -96,7 +96,7 @@ describe('Test LDAP - Cookie Based', () => {
     cy.xpath("//div[contains(@class, 'right-action-bar')]//button[contains(text(), 'Save')]").should('not.exist');
 
     cy.url().then((url) => {
-      ProjectWorkspace.preview(projectName,"anilkumar.akkaraveni@wavemaker.com","2907@WM#Studio");
+      ProjectWorkspace.preview("anilkumar.akkaraveni@wavemaker.com","2907@WM#Studio");
       LoginPage.basicPreviewLogin('wmqa', 'wm3q9u536');
       cy.get("button[name='button1']").should('be.visible');
       cy.visit(url, { failOnStatusCode: false });

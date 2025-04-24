@@ -37,12 +37,12 @@ describe('WaveMaker Test Suite', () => {
           LoginPage.visit("https://www.wavemakeronline.com/");
           LoginPage.login('ramcharan.kasinaboina@wavemaker.com','Wavemaker@Ram123');
           let projectName = ProjectManager.create();
-          DndWidget.performDndWidget('button');
+          DndWidget.performDndWidget('button','PAGE');
           ProjectWorkspace.saveWorkSpace();
           cy.url().then((url) => {
             cy.log("Original url is " + url); 
             // After capturing the original URL, perform other actions
-            ProjectWorkspace.preview(projectName,"ramcharan.kasinaboina@wavemaker.com","Wavemaker@Ram123");
+            ProjectWorkspace.preview("ramcharan.kasinaboina@wavemaker.com","Wavemaker@Ram123");
             cy.get("button[name='button1']").should('be.visible');
           });
       });

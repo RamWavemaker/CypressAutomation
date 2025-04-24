@@ -32,7 +32,7 @@ describe.skip('Ifrmae Test', () => {
   it.skip('Verifies the title', () => {
       LoginPage.visit("https://www.wavemakeronline.com/");
       let projectName = ProjectManager.create();
-      DndWidget.performDndWidget('iframe');
+      DndWidget.performDndWidget('iframe','PAGE');
       cy.xpath("//span[@class='wm-heading' and text()='Page Structure']").click();
       cy.get("[name='wm-widget-group-widgets-tree'] input").type('iframe1');
       cy.get("a[data-searchkey='iframe1']").click();
@@ -44,7 +44,7 @@ describe.skip('Ifrmae Test', () => {
       cy.url().then((url) => {
         cy.log("Original url is " + url); 
         // After capturing the original URL, perform other actions
-        ProjectWorkspace.preview(projectName,"ramcharan.kasinaboina@wavemaker.com","Wavemaker@Ram123");
+        ProjectWorkspace.preview("ramcharan.kasinaboina@wavemaker.com","Wavemaker@Ram123");
         cy.url().then((url) =>{
           cy.origin('https://docs.wavemaker.com', () => {
             cy.visit('https://docs.wavemaker.com/learn/');

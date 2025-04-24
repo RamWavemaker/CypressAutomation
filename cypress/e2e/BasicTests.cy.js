@@ -30,15 +30,14 @@ describe('Basic Test', () => {
   it('Verifies the title', () => {
       LoginPage.visit("https://www.wavemakeronline.com/");
       let projectName = ProjectManager.create();
-      DndWidget.performDndWidget('button');
+      DndWidget.performDndWidget('button','PAGE');
       ProjectWorkspace.saveWorkSpace();
       cy.url().then((url) => {
         cy.log("Original url is " + url); 
         // After capturing the original URL, perform other actions
-        ProjectWorkspace.preview(projectName,"ramcharan.kasinaboina@wavemaker.com","Wavemaker@Ram123");
+        ProjectWorkspace.preview("ramcharan.kasinaboina@wavemaker.com","Wavemaker@Ram123");
         cy.get("button[name='button1']").should('be.visible');
         cy.wait(5000);
-  
         // Now visit the original URL (ensure it's available after capturing)
         cy.visit(url, { failOnStatusCode: false });
       });
@@ -71,7 +70,7 @@ describe('Test LDAP ', () => {
   it('Verifies Ldap security', () => {
       LoginPage.visit("https://www.wavemakeronline.com/");
       let projectName = ProjectManager.create();
-      DndWidget.performDndWidget('button');
+      DndWidget.performDndWidget('button','PAGE');
       //Navigate to security settings
       cy.get('button[name="wm-category-settings"]').click();
       cy.get('a[title="Security"]').click();
@@ -100,7 +99,7 @@ describe('Test LDAP ', () => {
       cy.xpath("//div[contains(@class, 'right-action-bar')]//button[contains(text(), 'Save')]").should('not.exist');
 
       cy.url().then((url) => {
-        ProjectWorkspace.preview(projectName,"ramcharan.kasinaboina@wavemaker.com","Wavemaker@Ram123");
+        ProjectWorkspace.preview("ramcharan.kasinaboina@wavemaker.com","Wavemaker@Ram123");
         LoginPage.basicPreviewLogin('wmqa','wm3q9u536');
         cy.get("button[name='button1']").should('be.visible');
         // Now visit the original URL (ensure it's available after capturing)
