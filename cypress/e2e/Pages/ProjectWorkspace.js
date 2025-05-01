@@ -80,7 +80,7 @@ class ProjectWorkspace{
     
     setBindings(widgetName,BindType,propertName,propertyValue,widgetPropertyGroup){
         cy.xpath("//span[@class='wm-heading' and text()='Page Structure']").click();
-        cy.get("[name='wm-widget-group-widgets-tree'] input").type(widgetName);
+        cy.get("[name='wm-widget-group-widgets-tree'] input").clear().type(widgetName);
         cy.get(`a[data-searchkey='${widgetName}']`).click();
         switch (BindType) {
             case 'TEXT_BOX':

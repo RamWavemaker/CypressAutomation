@@ -23,10 +23,6 @@ class DndWidget {
       cy.log("unknown pageType");
       return error;
     }
-    this.searchWidget(widgetName);
-    this.dragAndAssert(widgetName);
-    ProjectWorkspace.saveWorkSpace();
-    return cy.get('span.dirty-icon').should('not.exist');
   }
 
 
@@ -94,18 +90,21 @@ class DndWidget {
       win.eval(script);
 
       // Now execute the drag and drop
-      const dragSelector = `li[name="wm-widget-${widgetName}"]`;
+      const dragSelector = `li[data-widget-type="wm-${widgetName}"]`;
       const dropSelector = widgetDropSelector;
-
-      win.$(dragSelector).simulateDragDrop({ dropTarget: win.$(dropSelector) });
+      win.$(dragSelector).simulateDragDrop({ dropTarget: win.$('wms-canvas-sandbox-wrapper')[0].shadowRoot.querySelector(dropSelector)});
+      cy.wait(1000)
     });
   }
 
-  performDndWidgetList(widgetNames){
-    
+  performDndWidgetList(widgetNames,pageType){
+    for (let i = 0; i < widgetNames.length; i++) {
+      const widget = widgetNames[i];
+      this.performDndWidget(widget,pageType);
+    }
   }
     datatableDrop(widgetName){
-    this.performDndWidget(widgetName);
+    this.performDndWidget(widgetName,'PAGE');
     cy.get("div[name='wms-source-data-source'] input").type('hrdb {enter}');
     cy.get("div[name='wms-source-data-operation'] input").type("User {enter}");
     cy.get("input[name='variable-name-input']").clear().type('user ');

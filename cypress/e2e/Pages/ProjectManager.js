@@ -10,7 +10,8 @@ class ProjectManager {
     }
 
     generateZipProjectName(projectName){
-        return `Cy_${projectName}`;
+        const randomName = Math.random().toString(36).substring(2, 8);
+        return `Cy_${projectName}_${randomName}`;
     }
 
     create(){

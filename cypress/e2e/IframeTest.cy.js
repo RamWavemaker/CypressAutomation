@@ -11,7 +11,7 @@ const userCredentials = {
     password: 'Wavemaker@Ram123'
   };
 
-describe.skip('Ifrmae Test', () => {
+describe('Ifrmae Test', () => {
   beforeEach(() => {
 
     cy.session(
@@ -20,8 +20,7 @@ describe.skip('Ifrmae Test', () => {
         LoginPage.visit("https://www.wavemakeronline.com/");
         LoginPage.login(userCredentials.email, userCredentials.password);
         
-      },
-      { cacheAcrossSpecs: true }
+      }
     );
 
     cy.getAllCookies().then((cookies) => {
@@ -29,7 +28,7 @@ describe.skip('Ifrmae Test', () => {
     });
     
   });
-  it.skip('Verifies the title', () => {
+  it('Verifies the title', () => {
       LoginPage.visit("https://www.wavemakeronline.com/");
       let projectName = ProjectManager.create();
       DndWidget.performDndWidget('iframe','PAGE');

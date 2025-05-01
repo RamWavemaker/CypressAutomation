@@ -9,7 +9,7 @@ const fs = require("fs-extra");
 const path = require("path");
 
 module.exports = defineConfig({
-  projectId: 'czgj9f',
+  projectId: 'pm93iy',
   video: true,
   videoUploadOnPasses: true,
   screenshotOnRunFailure: true,

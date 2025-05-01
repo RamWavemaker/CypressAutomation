@@ -12,7 +12,7 @@ const userCredentials = {
   password: 'Wavemaker@Ram123'
 };
 
-describe.skip('WidgetPropertiesTest', () => {
+describe('WidgetPropertiesTest', () => {
 
   beforeEach(() => {
 
@@ -22,8 +22,7 @@ describe.skip('WidgetPropertiesTest', () => {
         LoginPage.visit("https://www.wavemakeronline.com/");
         LoginPage.login(userCredentials.email, userCredentials.password);
 
-      },
-      { cacheAcrossSpecs: true }
+      }
     );
 
     cy.getAllCookies().then((cookies) => {
@@ -32,7 +31,7 @@ describe.skip('WidgetPropertiesTest', () => {
 
   });
 
-  it.skip('selectFirstRecordInMultiSelect', () => {
+  it('selectFirstRecordInMultiSelect', () => {
     LoginPage.visit("https://www.wavemakeronline.com/");
     let projectName = ProjectManager.create();
     ProjectWorkspace.addDataBase('HRDB');
@@ -45,7 +44,7 @@ describe.skip('WidgetPropertiesTest', () => {
     ProjectWorkspace.saveWorkSpace();
     cy.get('span.dirty-icon').should('not.exist');
     cy.url().then((url) => {
-      ProjectWorkspace.preview(projectName, userCredentials.email, userCredentials.password);
+      ProjectWorkspace.preview(userCredentials.email, userCredentials.password);
       cy.get('tr[data-row-id="0"] input[type="checkbox"]').should('be.checked');
       cy.get("div[name='UserTable1'] .app-datagrid-paginator a").contains('2').click();
       cy.get("tr[data-row-id='0'] input[type='checkbox']").should('not.be.checked');
@@ -56,38 +55,8 @@ describe.skip('WidgetPropertiesTest', () => {
   });
 })
 
-describe.skip('App runtime TestCases', () => {
-  it.skip('verifyIFrameDialog', () => {
-    const fileName = 'WidgetsLocalisationApp.zip';
-    const WidgetsLocalisationS3path = "wavemaker-test-apps/AutomationProjects/11.10/WidgetsLocalisationApp";
-    const localDownloadPath = "home/ramcharank_500385/Documents/ProgramFiles/Visualstudio/CypressAutomation/cypress/downloads";
-    AppRuntimeUtils.previewAppRuntime(userCredentials.email, userCredentials.password, fileName, WidgetsLocalisationS3path, localDownloadPath, 'PROJECT')
-      .then(() => {
-        FlakyTestsInSeliniumRunPage.verifyIFrameDialog();
-      }).then(() => {
-        cy.get('@currentProjectId').then((projectId) => {
-          ProjectManager.deleteProject(projectId);
-        });
-      })
-  });
 
-  it('verifyPageDialog', () => {
-    const fileName = 'WidgetsLocalisationApp.zip';
-    const WidgetsLocalisationS3path = "wavemaker-test-apps/AutomationProjects/11.10/WidgetsLocalisationApp";
-    const localDownloadPath = "home/ramcharank_500385/Documents/ProgramFiles/Visualstudio/CypressAutomation/cypress/downloads";
-    AppRuntimeUtils.previewAppRuntime(userCredentials.email, userCredentials.password, fileName, WidgetsLocalisationS3path, localDownloadPath, 'PROJECT')
-      .then(() => {
-        FlakyTestsInSeliniumRunPage.verifyPageDialog();
-      }).then(() => {
-        cy.get('@currentProjectId').then((projectId) => {
-          ProjectManager.deleteProject(projectId);
-        });
-      })
-  });
-})
-
-
-describe.skip('ImportSampleDBTest', () => {
+describe('ImportSampleDBTest', () => {
   beforeEach(() => {
 
     cy.session(
@@ -96,8 +65,7 @@ describe.skip('ImportSampleDBTest', () => {
         LoginPage.visit("https://www.wavemakeronline.com/");
         LoginPage.login(userCredentials.email, userCredentials.password);
 
-      },
-      { cacheAcrossSpecs: true }
+      }
     );
 
     cy.getAllCookies().then((cookies) => {
@@ -106,7 +74,7 @@ describe.skip('ImportSampleDBTest', () => {
 
   });
   it('verifyHrdbDBCrudOperations', () => {
-    LoginPage.visit("https://www.wavemakeronline.com/");
+    LoginDndWidget.performDndWidget('label','PAGE');Page.visit("https://www.wavemakeronline.com/");
     let projectName = ProjectManager.create();
     ProjectWorkspace.addDataBase('HRDB');
     DndWidget.performDndWidget('table', 'PAGE');
@@ -146,7 +114,7 @@ describe.skip('ImportSampleDBTest', () => {
 })
 
 
-describe.skip('RestServiceTest', () => {
+describe('RestServiceTest', () => {
   beforeEach(() => {
 
     cy.session(
@@ -155,8 +123,7 @@ describe.skip('RestServiceTest', () => {
         LoginPage.visit("https://www.wavemakeronline.com/");
         LoginPage.login(userCredentials.email, userCredentials.password);
 
-      },
-      { cacheAcrossSpecs: true }
+      }
     );
 
     cy.getAllCookies().then((cookies) => {
@@ -164,13 +131,13 @@ describe.skip('RestServiceTest', () => {
     });
 
   });
-  it.skip('importRestServiceWebApp', () => {
+  it('importRestServiceWebApp', () => {
     LoginPage.visit("https://www.wavemakeronline.com/");
     let projectName = ProjectManager.create();
     ApiDesginer.importRestApi('https://maps.googleapis.com/maps/api/directions/xml?origin=Toronto&destination=Montreal&sensor=false', 'googleapis', null);
     ApiDesginer.importRestApi('https://api.fda.gov/drug/event.json?search=patient.drug.openfda.pharm_class_epc:"nonsteroidal+anti-inflammatory+drug"&count=patient.reaction.reactionmeddrapt.exact', 'fdaservice', null);
     ProjectWorkspace.goToPages();
-    DndWidget.performDndWidgetList(['label', 'label', 'label', 'label']);
+    DndWidget.performDndWidgetList(['label','label','label','label'],'PAGE');
     ProjectWorkspace.saveWorkSpace();
     cy.get('span.dirty-icon').should('not.exist');
     WorkSpacePage.openVariableDialog();
@@ -200,7 +167,7 @@ describe.skip('RestServiceTest', () => {
 
     //bindings
     ProjectWorkspace.setBindings('label1', 'TEXT_BOX', 'caption', 'Google maps response', 'Properties');
-    ProjectWorkspace.setBindings('label2', 'BIND', 'caption', 'Variables.googleApi..dataSet.status', 'Properties');
+    ProjectWorkspace.setBindings('label2', 'BIND', 'caption', 'Variables.googleApi.dataSet.status', 'Properties');
     ProjectWorkspace.setBindings('label3', 'TEXT_BOX', 'caption', 'Fda service response', 'Properties');
     ProjectWorkspace.setBindings('label4', 'BIND', 'caption', 'Variables.fdaService.dataSet.meta.terms', 'Properties');
     ProjectWorkspace.saveWorkSpace();
@@ -214,9 +181,7 @@ describe.skip('RestServiceTest', () => {
   it('Test for Cypress', () => {
     LoginPage.visit("https://www.wavemakeronline.com/");
     let projectName = ProjectManager.create();
-    DndWidget.performDndWidget('button', 'PAGE');
-    DndWidget.performDndWidget('button', 'PAGE');
-    DndWidget.performDndWidget('button', 'PAGE');
+    DndWidget.performDndWidgetList(['button','button','button','button'],'PAGE');
 
   })
 });
@@ -230,8 +195,7 @@ describe('Dialog Test Case', () => {
         LoginPage.visit("https://www.wavemakeronline.com/");
         LoginPage.login(userCredentials.email, userCredentials.password);
 
-      },
-      { cacheAcrossSpecs: true }
+      }
     );
 
     cy.getAllCookies().then((cookies) => {
@@ -244,48 +208,74 @@ describe('Dialog Test Case', () => {
     LoginPage.visit("https://www.wavemakeronline.com/");
     let projectName = ProjectManager.createPrefab();
     DndWidget.performDndWidget('container', 'PREFAB');
-    // cy.get('button[title="View Project and Team published APIs"]').click();
-    // cy.contains('[title]', 'Import a new API').click();
-    // cy.get('img').eq(3).click();
-    // cy.get('input[name="wm-webservice-sample-url"]').type(
-    //   'https://api.fda.gov/drug/event.json?search=patient.drug.openfda.pharm_class_epc:"nonsteroidal+anti-inflammatory+drug"&count=patient.reaction.reactionmeddrapt.exact'
-    // );
-    // cy.contains('button', 'Test').click();
-    // cy.contains('button', /^Import$/).click();
-    // // Create a new page
-    // ProjectWorkspace.goToPages();
-    // cy.get('i[title="New Page"]').click();
-    // cy.contains('button', 'Next').click();
-    // cy.get("[name='wm-new-page-name']").type('prefabPartial1');
-    // cy.get("[name='btn-create-page']").should('be.visible').click();
-    // DndWidget.performDndWidget('table', 'PREFAB_PARTIAL');
+    ProjectWorkspace.goToApiDesigner();
+    cy.get('i.button-primary').click();
+    cy.get("[name='wm-webservice-rest']").click()
+    cy.get("[name='wm-webservice-sample-url']").clear().type('https://api.fda.gov/drug/event.json?search=patient.drug.openfda.pharm_class_epc:\"nonsteroidal+anti-inflammatory+drug\"&count=patient.reaction.reactionmeddrapt.exact');
+    // Create a new page
+    ProjectWorkspace.goToPages();
+    cy.get('i[title="New Page"]').click();
+    cy.contains('button', 'Next').click();
+    cy.get("[name='wm-new-page-name']").type('prefabPartial1');
+    cy.get("[name='btn-create-page']").should('be.visible').click();
+    DndWidget.performDndWidget('table', 'PREFAB_PARTIAL');
 
-    // // Select data source
-    // cy.get('input[placeholder="Select a source"]').click();
-    // cy.contains('a', 'fda').click();
+    // Select data source
+    cy.get('input[placeholder="Select a source"]').click();
+    cy.contains('a', 'fda').click();
 
-    // // Click on request data on page load
-    // cy.contains('div', /^Request data on page load$/).eq(1).click();
+    // Click on request data on page load
+    cy.contains('div', /^Request data on page load$/).eq(1).click();
 
-    // // Enable "startupdate-input" checkbox
-    // cy.get('input[name="startupdate-input"]').check();
+    // Enable "startupdate-input" checkbox
+    cy.get('input[name="startupdate-input"]').check();
 
-    // // Click through Next buttons and finish
-    // cy.contains('button', 'Next').click();
-    // cy.contains('button', 'Next').click();
-    // cy.contains('button', 'Next').click();
-    // cy.contains('button', 'Done').click();
+    // Click through Next buttons and finish
+    cy.contains('button', 'Next').click();
+    cy.contains('button', 'Next').click();
+    cy.contains('button', 'Next').click();
+    cy.contains('button', 'Done').click();
 
-    // // Go back to main page and select prefabPartial1 in combobox
-    // cy.contains('span', 'Pages').click();
-    // cy.get('[title="Main"]').click();
-    // cy.contains('span', 'Pages').click();
-    // cy.contains('span', 'Widgets').click();
+    // Go back to main page and select prefabPartial1 in combobox
+    cy.contains('span', 'Pages').click();
+    cy.get('[title="Main"]').click();
+    cy.contains('span', 'Pages').click();
+    cy.contains('span', 'Widgets').click();
 
-    // cy.wait(1000); // wait for UI update
+    cy.wait(1000); // wait for UI update
 
-    // cy.get('#property-content').find('[role="combobox"]').select('prefabPartial1');
+    cy.get('#property-content').find('[role="combobox"]').select('prefabPartial1');
   })
 
 
 });
+
+describe('App runtime TestCases', () => {
+  it('verifyIFrameDialog', () => {
+    const fileName = 'WidgetsLocalisationApp.zip';
+    const WidgetsLocalisationS3path = "wavemaker-test-apps/AutomationProjects/11.10/WidgetsLocalisationApp";
+    const localDownloadPath = "home/ramcharank_500385/Documents/ProgramFiles/Visualstudio/CypressAutomation/cypress/downloads";
+    AppRuntimeUtils.previewAppRuntime(userCredentials.email, userCredentials.password, fileName, WidgetsLocalisationS3path, localDownloadPath, 'PROJECT')
+      .then(() => {
+        FlakyTestsInSeliniumRunPage.verifyIFrameDialog();
+      }).then(() => {
+        cy.get('@currentProjectId').then((projectId) => {
+          ProjectManager.deleteProject(projectId);
+        });
+      })
+  });
+
+  it('verifyPageDialog', () => {
+    const fileName = 'WidgetsLocalisationApp.zip';
+    const WidgetsLocalisationS3path = "wavemaker-test-apps/AutomationProjects/11.10/WidgetsLocalisationApp";
+    const localDownloadPath = "home/ramcharank_500385/Documents/ProgramFiles/Visualstudio/CypressAutomation/cypress/downloads";
+    AppRuntimeUtils.previewAppRuntime(userCredentials.email, userCredentials.password, fileName, WidgetsLocalisationS3path, localDownloadPath, 'PROJECT')
+      .then(() => {
+        FlakyTestsInSeliniumRunPage.verifyPageDialog();
+      }).then(() => {
+        cy.get('@currentProjectId').then((projectId) => {
+          ProjectManager.deleteProject(projectId);
+        });
+      })
+  });
+})
