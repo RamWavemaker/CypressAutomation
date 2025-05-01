@@ -18,8 +18,7 @@ describe('Basic Test', () => {
         LoginPage.visit("https://www.wavemakeronline.com/");
         LoginPage.login(userCredentials.email, userCredentials.password);
         
-      },
-      { cacheAcrossSpecs: true }
+      }
     );
 
     cy.getAllCookies().then((cookies) => {
@@ -57,15 +56,12 @@ describe('Test LDAP ', () => {
       () => {
         LoginPage.visit("https://www.wavemakeronline.com/");
         LoginPage.login(userCredentials.email, userCredentials.password);
-      },
-      { cacheAcrossSpecs: true }
+      }
     );
 
     cy.getAllCookies().then((cookies) => {
       cy.log(JSON.stringify(cookies, null, 2)); 
     });
-    
-    
   });
   it('Verifies Ldap security', () => {
       LoginPage.visit("https://www.wavemakeronline.com/");
