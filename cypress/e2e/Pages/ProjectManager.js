@@ -1,7 +1,7 @@
 class ProjectManager {
 
     clickAppsTab() {
-        cy.get("a[name='appsLink']").should('be.visible').should('not.be.disabled').click();
+        cy.get("a[name='appsLink']").should("exist").should('be.visible').should('not.be.disabled').click();
     }
     
     generateProjectName(){

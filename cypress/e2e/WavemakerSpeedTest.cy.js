@@ -4,7 +4,7 @@ import DndWidget from './Pages/DndWidget';
 import ProjectWorkspace from './Pages/ProjectWorkspace';
 import $ from 'jquery';
 import ProjectManager from './Pages/ProjectManager';
-
+//clean
 describe('WaveMaker Test Suite', () => {
     let cookies = [];
   
@@ -13,7 +13,7 @@ describe('WaveMaker Test Suite', () => {
   
       cy.title().should('eq', 'WaveMaker');
 
-      LoginPage.login('ramcharan.kasinaboina@wavemaker.com','Wavemaker@Ram123');
+      LoginPage.login('test.automate11@wavemaker.com','Wavemaker@123');
       cy.url().should('include', '/projects/#/ManageRecents');
       cy.getCookies().then((c) => {
         cookies = c;

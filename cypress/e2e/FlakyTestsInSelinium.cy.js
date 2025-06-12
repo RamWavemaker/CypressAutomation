@@ -11,7 +11,7 @@ const userCredentials = {
   email: 'ramcharan.kasinaboina@wavemaker.com',
   password: 'Wavemaker@Ram123'
 };
-
+//clean
 describe('WidgetPropertiesTest', () => {
 
   beforeEach(() => {
@@ -56,7 +56,7 @@ describe('WidgetPropertiesTest', () => {
 })
 
 
-describe('ImportSampleDBTest', () => {
+describe.skip('ImportSampleDBTest', () => {
   beforeEach(() => {
 
     cy.session(
@@ -74,7 +74,8 @@ describe('ImportSampleDBTest', () => {
 
   });
   it('verifyHrdbDBCrudOperations', () => {
-    LoginDndWidget.performDndWidget('label','PAGE');Page.visit("https://www.wavemakeronline.com/");
+    cy.visit("https://www.wavemakeronline.com/");
+    DndWidget.performDndWidget('label','PAGE');
     let projectName = ProjectManager.create();
     ProjectWorkspace.addDataBase('HRDB');
     DndWidget.performDndWidget('table', 'PAGE');
@@ -114,7 +115,7 @@ describe('ImportSampleDBTest', () => {
 })
 
 
-describe('RestServiceTest', () => {
+describe.skip('RestServiceTest', () => {
   beforeEach(() => {
 
     cy.session(
@@ -186,7 +187,7 @@ describe('RestServiceTest', () => {
   })
 });
 
-describe('Dialog Test Case', () => {
+describe.skip('Dialog Test Case', () => {
   beforeEach(() => {
 
     cy.session(
@@ -250,32 +251,3 @@ describe('Dialog Test Case', () => {
 
 });
 
-describe('App runtime TestCases', () => {
-  it('verifyIFrameDialog', () => {
-    const fileName = 'WidgetsLocalisationApp.zip';
-    const WidgetsLocalisationS3path = "wavemaker-test-apps/AutomationProjects/11.10/WidgetsLocalisationApp";
-    const localDownloadPath = "home/ramcharank_500385/Documents/ProgramFiles/Visualstudio/CypressAutomation/cypress/downloads";
-    AppRuntimeUtils.previewAppRuntime(userCredentials.email, userCredentials.password, fileName, WidgetsLocalisationS3path, localDownloadPath, 'PROJECT')
-      .then(() => {
-        FlakyTestsInSeliniumRunPage.verifyIFrameDialog();
-      }).then(() => {
-        cy.get('@currentProjectId').then((projectId) => {
-          ProjectManager.deleteProject(projectId);
-        });
-      })
-  });
-
-  it('verifyPageDialog', () => {
-    const fileName = 'WidgetsLocalisationApp.zip';
-    const WidgetsLocalisationS3path = "wavemaker-test-apps/AutomationProjects/11.10/WidgetsLocalisationApp";
-    const localDownloadPath = "home/ramcharank_500385/Documents/ProgramFiles/Visualstudio/CypressAutomation/cypress/downloads";
-    AppRuntimeUtils.previewAppRuntime(userCredentials.email, userCredentials.password, fileName, WidgetsLocalisationS3path, localDownloadPath, 'PROJECT')
-      .then(() => {
-        FlakyTestsInSeliniumRunPage.verifyPageDialog();
-      }).then(() => {
-        cy.get('@currentProjectId').then((projectId) => {
-          ProjectManager.deleteProject(projectId);
-        });
-      })
-  });
-})

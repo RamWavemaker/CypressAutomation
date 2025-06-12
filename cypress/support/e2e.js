@@ -20,29 +20,3 @@ import 'cypress-xpath';
 
 import '@4tw/cypress-drag-drop'
 
-import "allure-cypress";
-
-Cypress.on('uncaught:exception', (err, runnable) => {
-    // Ignore renderProps() bug from Allure
-    if (err.message.includes('renderProps is not a function')) {
-      return false; // prevents test from failing
-    }
-  
-    // Let other exceptions fail the test
-    return true;
-});
-
-Cypress.on('fail', (error, runnable) => {
-  try {
-    const testTitle = `${runnable.parent.title} -- ${runnable.title}`;
-    const screenshotFileName = `${testTitle} (failed).png`;
-    const screenshotPath = `cypress/screenshots/${Cypress.spec.name}/${screenshotFileName}`;
-
-    // Attach screenshot
-    addAttachment('Screenshot on Failure', screenshotPath, 'image/png');
-  } catch (err) {
-    console.warn('❗ Error attaching screenshot to Allure:', err.message);
-  }
-
-  throw error; // Always rethrow to let the test fail
-});
