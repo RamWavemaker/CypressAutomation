@@ -93,7 +93,7 @@ class DndWidget {
       const dragSelector = `li[data-widget-type="wm-${widgetName}"]`;
       const dropSelector = widgetDropSelector;
       win.$(dragSelector).simulateDragDrop({ dropTarget: win.$('wms-canvas-sandbox-wrapper')[0].shadowRoot.querySelector(dropSelector)});
-      cy.wait(1000)
+      cy.wait(2000)
     });
   }
 

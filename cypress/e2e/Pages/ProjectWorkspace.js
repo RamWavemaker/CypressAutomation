@@ -79,7 +79,15 @@ class ProjectWorkspace{
     }
     
     setBindings(widgetName,BindType,propertName,propertyValue,widgetPropertyGroup){
-        cy.xpath("//span[@class='wm-heading' and text()='Page Structure']").click();
+        cy.contains('span', 'Page Structure')
+        .parents('div.panel-title')
+        .find('button[name="wm-expand-widget-accordian-btn"]')
+        .then(($btn) => {
+            const classList = $btn.attr('class');
+            if (classList.includes('wms-caret-right')) {
+                cy.xpath("//span[@class='wm-heading' and text()='Page Structure']").click();
+            }
+        });
         cy.get("[name='wm-widget-group-widgets-tree'] input").clear().type(widgetName);
         cy.get(`a[data-searchkey='${widgetName}']`).click();
         switch (BindType) {

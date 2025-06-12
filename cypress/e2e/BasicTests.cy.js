@@ -4,7 +4,7 @@ import DndWidget from './Pages/DndWidget';
 import ProjectManager from './Pages/ProjectManager';
 import ProjectWorkspace from './Pages/ProjectWorkspace';
 import $ from 'jquery';
-
+//clean
 describe('Basic Test', () => {
   beforeEach(() => {
     const userCredentials = {
@@ -47,8 +47,8 @@ describe('Basic Test', () => {
 describe('Test LDAP ', () => {
   beforeEach(() => {
     const userCredentials = {
-      email: 'ramcharan.kasinaboina@wavemaker.com',
-      password: 'Wavemaker@Ram123'
+      email: 'sumashree.pendela@wavemaker.com',
+      password: 'Wavemaker@123'
     };
 
     cy.session(

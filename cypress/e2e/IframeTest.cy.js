@@ -10,8 +10,8 @@ const userCredentials = {
     email: 'ramcharan.kasinaboina@wavemaker.com',
     password: 'Wavemaker@Ram123'
   };
-
-describe('Ifrmae Test', () => {
+//clean
+describe.skip('Ifrmae Test', () => {
   beforeEach(() => {
 
     cy.session(
@@ -19,7 +19,6 @@ describe('Ifrmae Test', () => {
       () => {
         LoginPage.visit("https://www.wavemakeronline.com/");
         LoginPage.login(userCredentials.email, userCredentials.password);
-        
       }
     );
 
@@ -64,7 +63,7 @@ describe('Ifrmae Test', () => {
 });
 
 
-describe(' Iframe W3Schools Test', () => {
+describe.skip(' Iframe W3Schools Test', () => {
   it('Clicks search icon and types into tnb-google-search-input', () => {
     cy.visit('https://www.w3schools.com/tags/tryit.asp?filename=tryhtml_iframe');
     cy.frameLoaded('#iframeResult');

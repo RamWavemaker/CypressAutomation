@@ -1,0 +1,25 @@
+{
+    "suites": [
+      {
+        "name": "CoreTests",
+        "specs": [
+          "cypress/e2e/BasicTests.cy.js",
+          "cypress/e2e/BasicTestsCookie.cy.js"
+        ]
+      },
+      {
+        "name": "AdvancedTests",
+        "specs": [
+          "cypress/e2e/AppruntimeTests.cy.js",
+          "cypress/e2e/IframeTest.cy.js"
+        ]
+      },
+      {
+        "name": "PerformanceTests",
+        "specs": [
+          "cypress/e2e/WavemakerSpeedTest.cy.js",
+          "cypress/e2e/FlakyTestsInSelinium.cy.js"
+        ]
+      }
+    ]
+  }

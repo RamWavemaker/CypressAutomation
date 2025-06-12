@@ -3,7 +3,7 @@ import LoginPage from './Pages/LoginPage';
 import DndWidget from './Pages/DndWidget';
 import ProjectManager from './Pages/ProjectManager';
 import ProjectWorkspace from './Pages/ProjectWorkspace';
-
+//clean
 before(() => {
   cy.getCookie('auth_cookie').then((cookie) => {
     if (!cookie || !cookie.value) {
