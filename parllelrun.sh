@@ -1,17 +1,17 @@
 #!/bin/bash
 
 # Number of parallel instances to run
-PARALLEL_COUNT=4
+PARALLEL_COUNT=$1
 
 # Set your build ID (can use timestamp or UUID for uniqueness)
-CI_BUILD_ID="local-build-$(date +%s)"
+CI_BUILD_ID=$2
 
 # Cypress run command (edit if needed)
 CYPRESS_CMD="npx cypress-cloud run --parallel --record --key xyz --ci-build-id $CI_BUILD_ID"
 
 # Function to run Cypress
 run_cypress() {
-  echo "Starting Cypress instance $1 with build ID $CI_BUILD_ID"
+  echo "Starting Cypress instance with build ID $CI_BUILD_ID"
   $CYPRESS_CMD &
 }
 
