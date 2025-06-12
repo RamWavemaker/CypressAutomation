@@ -1,4 +1,5 @@
 const { defineConfig } = require("cypress");
+const { cloudPlugin } = require("cypress-cloud/plugin");
 require('dotenv').config();
 const awsController = require('./cypress/utils/AwsController');
 
