@@ -1,7 +1,7 @@
 const { defineConfig } = require("cypress");
 require('dotenv').config();
 const awsController = require('./cypress/utils/AwsController');
-
+const { cloudPlugin } = require("cypress-cloud/plugin");
 const os = require("node:os");
 const fs = require("fs-extra");
 const path = require("path");
