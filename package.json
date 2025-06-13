@@ -3,9 +3,6 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "npx cypress run",
-    "cy:parallel": "cypress-parallel -d cypress/e2e/ -t 2 -s test",
-    "postrun": "node patch-sorry-cypress-results.js"
   },
   "keywords": [],
   "author": "",
