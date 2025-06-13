@@ -2,8 +2,7 @@
   "name": "cypressautomation",
   "version": "1.0.0",
   "main": "index.js",
-  "scripts": {
-  },
+  "scripts": {},
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -13,6 +12,7 @@
     "@types/cypress": "^1.1.6",
     "@types/node": "^22.14.0",
     "cypress": "^14.2.1",
+    "cypress-cloud": "^2.0.0-beta.1",
     "cypress-iframe": "^1.0.1",
     "cypress-xpath": "^2.0.1",
     "jquery": "^3.7.1",
@@ -21,7 +21,6 @@
   },
   "dependencies": {
     "aws-sdk": "^2.1692.0",
-    "cypress-cloud": "^1.13.0",
     "cypress-parallel": "^0.15.0",
     "dotenv": "^16.4.7"
   }
