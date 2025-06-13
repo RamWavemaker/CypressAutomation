@@ -9,7 +9,6 @@ const path = require("path");
 module.exports = defineConfig({
   projectId: 'sorrycypress123',
   video: true,
-  videoUploadOnPasses: true,
   screenshotOnRunFailure: true,
   e2e: {
     defaultCommandTimeout: 10000,
