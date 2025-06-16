@@ -30,11 +30,5 @@ spec:
               value: "${AWS_SECRET_ACCESS_KEY}"
             - name: BUILD_NUMBER
               value: "${BUILD_NUMBER}"
-          volumeMounts:
-            - name: project-volume
-              mountPath: /e2e
       restartPolicy: Never
-      volumes:
-        - name: project-volume
-          emptyDir: {}
   backoffLimit: 0
