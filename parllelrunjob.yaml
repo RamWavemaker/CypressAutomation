@@ -1,7 +1,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: ${JOB_NAME}
+  name: ${KUBE_JOB_NAME}
   namespace: ${NAMESPACE}
 spec:
   template:
