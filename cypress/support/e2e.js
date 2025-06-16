@@ -18,5 +18,18 @@ import './commands'
 
 import 'cypress-xpath';
 
-import '@4tw/cypress-drag-drop'
+import '@4tw/cypress-drag-drop';
 
+import "allure-cypress";
+import addAttachment from 'allure-cypress';
+
+
+Cypress.on('test:after:run', (test, runnable) => {
+    if (test.state === 'failed') {
+      const specName = Cypress.spec.name;
+      const screenshotFileName = `${runnable.parent.title} -- ${test.title} (failed).png`;
+      const screenshotPath = `cypress/screenshots/${specName}/${screenshotFileName}`;
+  
+      addAttachment('Screenshot on failure', screenshotPath, 'image/png');
+    }
+});
