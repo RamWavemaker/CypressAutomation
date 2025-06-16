@@ -3,6 +3,7 @@ cypress/videos/
 cypress/screenshots/
 allure-results/
 allure-report/
+downloads/
 .env
 practical
 practical1

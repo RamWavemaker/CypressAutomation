@@ -2,12 +2,12 @@ FROM cypress/included:13.15.0
 
 WORKDIR /app
 
-# Copy only package files first, for caching
+# Copy package files and install dependencies
 COPY package*.json ./
+RUN npm install
 
-
-# Then copy the rest of the source code
+# Copy rest of the project files
 COPY . .
 
-# Run tests with support for CYPRESS_SPEC
+# Run tests (supports environment variables and CYPRESS_SPEC override)
 CMD ["npx", "cypress", "run"]

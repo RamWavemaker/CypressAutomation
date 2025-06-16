@@ -1,5 +1,5 @@
 module.exports = {
-  projectId: "wavemakertest123",
+  projectId: "wavemaker123",
   recordKey: "xyz",
-  cloudServiceUrl: "http://director.chart-example.local",
+  cloudServiceUrl: "http://localhost:1234/",
 };

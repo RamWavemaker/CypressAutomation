@@ -1,7 +1,7 @@
 const { defineConfig } = require("cypress");
 require('dotenv').config();
 const awsController = require('./cypress/utils/AwsController');
-const { cloudPlugin } = require("cypress-cloud/plugin");
+const allureCypress = require("allure-cypress/reporter").allureCypress;
 const os = require("node:os");
 const fs = require("fs-extra");
 const path = require("path");
@@ -14,6 +14,11 @@ module.exports = defineConfig({
     defaultCommandTimeout: 10000,
     chromeWebSecurity: false,
     setupNodeEvents(on, config) {
+
+      allureCypress(on, config, {
+        resultsDir: process.env.ALLURE_RESULTS_DIR || "allure-results",
+      });
+
       on('task', {
         async downloadFileFromS3({ key, downloadPath }) {
           const bucketName = process.env.S3_BUCKET_NAME;
@@ -26,7 +31,7 @@ module.exports = defineConfig({
         }
       });
 
-      return cloudPlugin(on, config);
+      return config;
     },
   },
 });
