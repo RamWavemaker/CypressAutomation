@@ -17,8 +17,8 @@ spec:
               EXIT_CODE=$? ;
               echo "Cypress Exit Code: $EXIT_CODE" ;
               echo "Uploading Allure results..." ;
-              ls -R /e2e/${ALLURE_DIR} ;
-              aws s3 cp "/e2e/${ALLURE_DIR}" "s3://wm-qa-automation/${JOB_NAME}/${BUILD_NUMBER}" --recursive --acl public-read ;
+              ls -R ${ALLURE_DIR} ;
+              aws s3 cp "${ALLURE_DIR}" "s3://wm-qa-automation/${JOB_NAME}/${BUILD_NUMBER}" --recursive --acl public-read ;
               echo "✅ Uploaded to s3://wm-qa-automation/${JOB_NAME}/${BUILD_NUMBER}/" ;
               exit $EXIT_CODE
           env:
