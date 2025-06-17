@@ -13,38 +13,33 @@ spec:
           args:
             - >
               set -x ;
-              echo "📁 BEFORE Cypress run: contents of /e2e" ;
-              ls -R /e2e ;
+              echo "📁 BEFORE Cypress run: contents of project root" ;
+              ls -R ;
 
               echo "🚀 Running Cypress..." ;
-              npx cypress run --spec "${SPEC_FILES}" --env allureResultsPath=/e2e/${ALLURE_DIR} ;
+              npx cypress run --spec "${SPEC_FILES}" --env allureResultsPath=${ALLURE_DIR} ;
               EXIT_CODE=$? ;
 
               echo "🧪 Cypress Exit Code: $EXIT_CODE" ;
 
-              echo "📁 AFTER Cypress run: contents of /e2e" ;
-              ls -R /e2e ;
-
-              echo "📁 Checking Allure results directory: /e2e/${ALLURE_DIR}" ;
-              ls -la /e2e/${ALLURE_DIR} || echo "❌ Allure directory not found" ;
+              echo "📁 AFTER Cypress run: checking ${ALLURE_DIR}" ;
+              ls -la ${ALLURE_DIR} || echo "❌ Allure directory not found" ;
 
               echo "☁️ Uploading to S3..." ;
-              aws s3 cp "/e2e/${ALLURE_DIR}" "s3://wm-qa-automation/${JOB_NAME}/${BUILD_NUMBER}/" --recursive --acl public-read ;
+              aws s3 cp "${ALLURE_DIR}" "s3://wm-qa-automation/${JOB_NAME}/${BUILD_NUMBER}/" --recursive --acl public-read ;
 
               echo "✅ Uploaded to s3://wm-qa-automation/${JOB_NAME}/${BUILD_NUMBER}/" ;
               exit $EXIT_CODE
           env:
+            - name: ALLURE_RESULTS_DIR
+              value: "allure-results-worker-1"
             - name: AWS_ACCESS_KEY_ID
               value: "${AWS_ACCESS_KEY_ID}"
             - name: AWS_SECRET_ACCESS_KEY
               value: "${AWS_SECRET_ACCESS_KEY}"
             - name: BUILD_NUMBER
               value: "${BUILD_NUMBER}"
-          volumeMounts:
-            - name: project-volume
-              mountPath: /e2e
+            - name: ALLURE_DIR
+              value: "allure-results-worker-1"
       restartPolicy: Never
-      volumes:
-        - name: project-volume
-          emptyDir: {}
   backoffLimit: 0
