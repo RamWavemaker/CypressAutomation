@@ -9,6 +9,13 @@ spec:
       containers:
         - name: cypress
           image: ${IMAGE_NAME}
+          resources:
+            requests:
+              memory: "1.5Gi"
+              cpu: "750m"
+            limits:
+              memory: "3Gi"
+              cpu: "2"
           command: ["/bin/sh", "-c"]
           args:
             - >
