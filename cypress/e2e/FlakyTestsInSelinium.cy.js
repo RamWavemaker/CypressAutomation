@@ -12,7 +12,10 @@ const userCredentials = {
   password: 'Wavemaker@Ram123'
 };
 //clean
-describe('WidgetPropertiesTest', () => {
+const RUN_COUNT = 20;
+
+for (let i = 1; i <= RUN_COUNT; i++) {
+describe(`WidgetPropertiesTest-${i}`, () => {
 
   beforeEach(() => {
 
@@ -21,7 +24,6 @@ describe('WidgetPropertiesTest', () => {
       () => {
         LoginPage.visit("https://www.wavemakeronline.com/");
         LoginPage.login(userCredentials.email, userCredentials.password);
-
       }
     );
 
@@ -29,17 +31,21 @@ describe('WidgetPropertiesTest', () => {
       cy.log(JSON.stringify(cookies, null, 2));
     });
 
+    cy.getCookie('JSESSIONID').then((cookie) => {
+      Cypress.env('CJSESSIONID', cookie.value);
+    });
+
   });
 
-  it('selectFirstRecordInMultiSelect', () => {
+  it(`selectFirstRecordInMultiSelect-${i}`, () => {
     LoginPage.visit("https://www.wavemakeronline.com/");
     let projectName = ProjectManager.create();
     ProjectWorkspace.addDataBase('HRDB');
     DndWidget.datatableDrop('table');
     ProjectWorkspace.openPageStructureAndSearchWidget('UserTable1');
     cy.get("[data-identifier='property-advancedsettings']").click();
-    cy.get('#toggle-checkbox-property-multiselect').check({ force: true });
-    cy.get('#toggle-checkbox-property-gridfirstrowselect').check({ force: true });
+    cy.get('#toggle-checkbox-property-multiselect-table-Ads').check({ force: true });
+    cy.get('#toggle-checkbox-property-gridfirstrowselect-table-Ads').check({ force: true });
     cy.get("wms-dialog-footer button[title='Save']").click();
     ProjectWorkspace.saveWorkSpace();
     cy.get('span.dirty-icon').should('not.exist');
@@ -51,12 +57,15 @@ describe('WidgetPropertiesTest', () => {
       cy.get("div[name='UserTable1'] .app-datagrid-paginator a").contains('1').click();
       cy.get("tr[data-row-id='0'] input[type='checkbox']").should('be.checked');
       cy.visit(url, { failOnStatusCode: false });
+    }).then(() => {
+      // ✅ Cleanup step
+      ProjectManager.deleteCreatedProject(projectName);
     });
   });
 })
 
 
-describe.skip('ImportSampleDBTest', () => {
+describe(`ImportSampleDBTest-${i}`, () => {
   beforeEach(() => {
 
     cy.session(
@@ -72,11 +81,15 @@ describe.skip('ImportSampleDBTest', () => {
       cy.log(JSON.stringify(cookies, null, 2));
     });
 
+    cy.getCookie('JSESSIONID').then((cookie) => {
+      Cypress.env('CJSESSIONID', cookie.value);
+    });
+
   });
-  it('verifyHrdbDBCrudOperations', () => {
+  it(`verifyHrdbDBCrudOperations-${i}`, () => {   //success
     cy.visit("https://www.wavemakeronline.com/");
-    DndWidget.performDndWidget('label','PAGE');
     let projectName = ProjectManager.create();
+    DndWidget.performDndWidget('label','PAGE');
     ProjectWorkspace.addDataBase('HRDB');
     DndWidget.performDndWidget('table', 'PAGE');
     cy.get("div[name='wms-source-data-source'] input").type('hrdb {enter}');
@@ -110,12 +123,15 @@ describe.skip('ImportSampleDBTest', () => {
       cy.get('button.ok-action').click();
       cy.get('[data-row-id="5"]').should('not.exist');
       cy.visit(url, { failOnStatusCode: false });
+    }).then(() => {
+      // ✅ Cleanup step
+      ProjectManager.deleteCreatedProject(projectName);
     });
   });
 })
 
 
-describe.skip('RestServiceTest', () => {
+describe(`RestServiceTest-${i}`, () => {
   beforeEach(() => {
 
     cy.session(
@@ -132,7 +148,7 @@ describe.skip('RestServiceTest', () => {
     });
 
   });
-  it('importRestServiceWebApp', () => {
+  it(`importRestServiceWebApp-${i}`, () => {
     LoginPage.visit("https://www.wavemakeronline.com/");
     let projectName = ProjectManager.create();
     ApiDesginer.importRestApi('https://maps.googleapis.com/maps/api/directions/xml?origin=Toronto&destination=Montreal&sensor=false', 'googleapis', null);
@@ -176,78 +192,10 @@ describe.skip('RestServiceTest', () => {
     //verify in preview
     cy.url().then((url) => {
       ProjectWorkspace.preview(userCredentials.email, userCredentials.password);
-    })
-  })
-
-  it('Test for Cypress', () => {
-    LoginPage.visit("https://www.wavemakeronline.com/");
-    let projectName = ProjectManager.create();
-    DndWidget.performDndWidgetList(['button','button','button','button'],'PAGE');
-
-  })
-});
-
-describe.skip('Dialog Test Case', () => {
-  beforeEach(() => {
-
-    cy.session(
-      [userCredentials.email, userCredentials.password],
-      () => {
-        LoginPage.visit("https://www.wavemakeronline.com/");
-        LoginPage.login(userCredentials.email, userCredentials.password);
-
-      }
-    );
-
-    cy.getAllCookies().then((cookies) => {
-      cy.log(JSON.stringify(cookies, null, 2));
+    }).then(() => {
+      // ✅ Cleanup step
+      ProjectManager.deleteCreatedProject(projectName);
     });
-
-  });
-
-  it('DialogTestCase', () => {
-    LoginPage.visit("https://www.wavemakeronline.com/");
-    let projectName = ProjectManager.createPrefab();
-    DndWidget.performDndWidget('container', 'PREFAB');
-    ProjectWorkspace.goToApiDesigner();
-    cy.get('i.button-primary').click();
-    cy.get("[name='wm-webservice-rest']").click()
-    cy.get("[name='wm-webservice-sample-url']").clear().type('https://api.fda.gov/drug/event.json?search=patient.drug.openfda.pharm_class_epc:\"nonsteroidal+anti-inflammatory+drug\"&count=patient.reaction.reactionmeddrapt.exact');
-    // Create a new page
-    ProjectWorkspace.goToPages();
-    cy.get('i[title="New Page"]').click();
-    cy.contains('button', 'Next').click();
-    cy.get("[name='wm-new-page-name']").type('prefabPartial1');
-    cy.get("[name='btn-create-page']").should('be.visible').click();
-    DndWidget.performDndWidget('table', 'PREFAB_PARTIAL');
-
-    // Select data source
-    cy.get('input[placeholder="Select a source"]').click();
-    cy.contains('a', 'fda').click();
-
-    // Click on request data on page load
-    cy.contains('div', /^Request data on page load$/).eq(1).click();
-
-    // Enable "startupdate-input" checkbox
-    cy.get('input[name="startupdate-input"]').check();
-
-    // Click through Next buttons and finish
-    cy.contains('button', 'Next').click();
-    cy.contains('button', 'Next').click();
-    cy.contains('button', 'Next').click();
-    cy.contains('button', 'Done').click();
-
-    // Go back to main page and select prefabPartial1 in combobox
-    cy.contains('span', 'Pages').click();
-    cy.get('[title="Main"]').click();
-    cy.contains('span', 'Pages').click();
-    cy.contains('span', 'Widgets').click();
-
-    cy.wait(1000); // wait for UI update
-
-    cy.get('#property-content').find('[role="combobox"]').select('prefabPartial1');
   })
-
-
 });
-
+}

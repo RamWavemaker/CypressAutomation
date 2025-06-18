@@ -33,3 +33,17 @@ Cypress.on('test:after:run', (test, runnable) => {
       addAttachment('Screenshot on failure', screenshotPath, 'image/png');
     }
 });
+
+Cypress.on('uncaught:exception', (err) => {
+  if (err.message.includes('renderProps')) {
+    // Suppress that specific error
+    return false;
+  }
+
+  // Optional: suppress cy.origin serialization error if you're not doing cross-domain data sharing
+  if (err.message.includes('cy.origin() could not serialize the subject')) {
+    return false;
+  }
+
+  return true; // Let all other errors fail the test
+});

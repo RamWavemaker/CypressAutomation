@@ -126,8 +126,43 @@ class ProjectManager {
         return cy.wrap(response.body);
       });
     }
-    
-      
+
+    deleteCreatedProject(projectName){
+      const url = `https://www.wavemakeronline.com/edn-services/rest/projects`
+      const jsessionId = Cypress.env('CJSESSIONID');
+      return cy.request({
+        method: 'GET',
+        url,
+        headers: {
+          'Cookie': `JSESSIONID=${jsessionId}`,
+        }
+      }).then(response => {
+        if (response.status === 200) {
+          const allProjects = response.body;
+          cy.log(allProjects.content[0].projectId);
+          cy.log(JSON.stringify(response.body));
+          let matchedProjectId = this.getProjectIdByProjname(allProjects,projectName);
+          cy.log(matchedProjectId);
+          this.deleteProject(matchedProjectId);
+        } else {
+          console.warn("Api failed");
+        }
+        return cy.wrap(response.body);
+      });
+    }
+
+
+    getProjectIdByProjname(allProjects, projectName) {
+      const length = allProjects.content.length;
+      for (let i = 0; i < length; i++) {
+        const project = allProjects.content[i];
+        cy.log(`ProjectName ${projectName} cameProject ${project.name}`);
+        if (project.name === projectName) {
+          return project.projectId; // or return project.studioProjectId;
+        }
+      }
+      return null; // if not found
+    }  
 }
 
 export default new ProjectManager();

@@ -4,6 +4,14 @@ import DndWidget from './Pages/DndWidget';
 import ProjectManager from './Pages/ProjectManager';
 import ProjectWorkspace from './Pages/ProjectWorkspace';
 //clean
+const userCredentials = {
+  email: 'anilkumar.akkaraveni@wavemaker.com',
+  password: '2907@WM#Studio'
+};
+
+const RUN_COUNT = 20;
+
+for (let i = 1; i <= RUN_COUNT; i++) {
 before(() => {
   cy.getCookie('auth_cookie').then((cookie) => {
     if (!cookie || !cookie.value) {
@@ -11,32 +19,59 @@ before(() => {
 
       // Perform login
       LoginPage.visit("https://www.wavemakeronline.com/");
-      LoginPage.login("anilkumar.akkaraveni@wavemaker.com","2907@WM#Studio");
+      LoginPage.login(userCredentials.email, userCredentials.password);
 
-      // Store the auth cookie
-      cy.wait(2000);
-      cy.getCookie('auth_cookie').then((newCookie) => {
-        if (newCookie) {
-          Cypress.env('authCookie', newCookie); // ✅ Store globally in Cypress env
-          cy.log(`Stored Cookie: ${JSON.stringify(newCookie)}`);
+      cy.wait(3000);
+
+      // After login, get and set auth_cookie and JSESSIONID
+      cy.getCookie('auth_cookie').then((newAuthCookie) => {
+        if (newAuthCookie && newAuthCookie.value) {
+          Cypress.env('authCookie', newAuthCookie);
+          cy.log(`✅ Stored auth_cookie: ${JSON.stringify(newAuthCookie)}`);
         }
       });
+
+      cy.getCookie('JSESSIONID').then((newSessionCookie) => {
+        if (newSessionCookie && newSessionCookie.value) {
+          Cypress.env('CJSESSIONID', newSessionCookie.value); // ✅ set to env
+          cy.log(`✅ Stored JSESSIONID: ${newSessionCookie.value}`);
+        }
+      });
+
     } else {
-      cy.logdescribe("Session exists. Using existing auth cookie.");
+      // Use existing cookie
       Cypress.env('authCookie', cookie);
+      cy.log("✅ Session exists. Using existing auth_cookie.");
+
+      // Get and store current JSESSIONID
+      cy.getCookie('JSESSIONID').then((existingSessionCookie) => {
+        if (existingSessionCookie && existingSessionCookie.value) {
+          Cypress.env('CJSESSIONID', existingSessionCookie.value); // ✅ set to env
+          cy.log(`✅ Stored existing JSESSIONID: ${existingSessionCookie.value}`);
+        }
+      });
     }
   });
 });
 
 beforeEach(() => {
   const authCookie = Cypress.env('authCookie');
-  if (authCookie) {
-    cy.setCookie(authCookie.name, authCookie.value); // ✅ Restore cookie before each test
+  const jsessionId = Cypress.env('CJSESSIONID');
+
+  // Restore auth cookie
+  if (authCookie && authCookie.name && authCookie.value) {
+    cy.setCookie(authCookie.name, authCookie.value);
+  }
+
+  // Restore JSESSIONID
+  if (jsessionId) {
+    cy.setCookie('JSESSIONID', jsessionId);
   }
 });
 
-describe('Basic Test - Cookie Based', () => {
-  it('Verifies the title and session cookies', () => {
+
+describe(`Basic Test - Cookie Based-${i}`, () => {
+  it(`Verifies the title and session cookies-${i}`, () => {
     LoginPage.visit("https://www.wavemakeronline.com/");
     let projectName = ProjectManager.create();
     DndWidget.performDndWidget('button','PAGE');
@@ -44,10 +79,13 @@ describe('Basic Test - Cookie Based', () => {
     ProjectWorkspace.saveWorkSpace();
     cy.url().then((url) => {
       cy.log("Original URL is " + url);
-      ProjectWorkspace.preview("anilkumar.akkaraveni@wavemaker.com","2907@WM#Studio");
+      ProjectWorkspace.preview(userCredentials.email, userCredentials.password);
       cy.get("button[name='button1']").should('be.visible');
       cy.wait(5000);
       cy.visit(url, { failOnStatusCode: false });
+    }).then(() => {
+      // ✅ Cleanup step
+      ProjectManager.deleteCreatedProject(projectName);
     });
   });
 
@@ -56,8 +94,8 @@ describe('Basic Test - Cookie Based', () => {
   });
 });
 
-describe('Test LDAP - Cookie Based', () => {
-  it('Verifies LDAP security and cookies', () => {
+describe(`Test LDAP - Cookie Based-${i}`, () => {
+  it(`Verifies LDAP security and cookies-${i}`, () => {
     LoginPage.visit("https://www.wavemakeronline.com/");
     let projectName = ProjectManager.create();
     DndWidget.performDndWidget('button','PAGE');
@@ -96,10 +134,13 @@ describe('Test LDAP - Cookie Based', () => {
     cy.xpath("//div[contains(@class, 'right-action-bar')]//button[contains(text(), 'Save')]").should('not.exist');
 
     cy.url().then((url) => {
-      ProjectWorkspace.preview("anilkumar.akkaraveni@wavemaker.com","2907@WM#Studio");
+      ProjectWorkspace.preview(userCredentials.email, userCredentials.password);
       LoginPage.basicPreviewLogin('wmqa', 'wm3q9u536');
       cy.get("button[name='button1']").should('be.visible');
       cy.visit(url, { failOnStatusCode: false });
+    }).then(() => {
+      // ✅ Cleanup step
+      ProjectManager.deleteCreatedProject(projectName);
     });
   });
 
@@ -107,3 +148,4 @@ describe('Test LDAP - Cookie Based', () => {
     cy.clearCookies(); // Optional cleanup
   });
 });
+}
