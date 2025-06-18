@@ -121,7 +121,7 @@ class ProjectWorkspace{
 
 
     enterTextInMonacoEditor(properValue){
-        const propertyValue = ``; // your value here
+        const propertyValue = properValue; // your value here
 
         const escapedValue = propertyValue
         .replace(/\n/g, '\\n')

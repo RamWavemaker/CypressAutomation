@@ -4,13 +4,17 @@ import DndWidget from './Pages/DndWidget';
 import ProjectManager from './Pages/ProjectManager';
 import ProjectWorkspace from './Pages/ProjectWorkspace';
 import $ from 'jquery';
+
+const userCredentials = {
+  email: 'sumashree.pendela@wavemaker.com',
+  password: 'Wavemaker@123'
+};
 //clean
-describe('Basic Test', () => {
+const RUN_COUNT = 20;
+
+for (let i = 1; i <= RUN_COUNT; i++) {
+describe(`Basic Test-${i}`, () => {
   beforeEach(() => {
-    const userCredentials = {
-      email: 'ramcharan.kasinaboina@wavemaker.com',
-      password: 'Wavemaker@Ram123'
-    };
 
     cy.session(
       [userCredentials.email,userCredentials.password], 
@@ -24,9 +28,13 @@ describe('Basic Test', () => {
     cy.getAllCookies().then((cookies) => {
       cy.log(JSON.stringify(cookies, null, 2)); 
     });
+
+    cy.getCookie('JSESSIONID').then((cookie) => {
+      Cypress.env('CJSESSIONID', cookie.value);
+    });
     
   });
-  it('Verifies the title', () => {
+  it(`Verifies the title-${i}`, () => {
       LoginPage.visit("https://www.wavemakeronline.com/");
       let projectName = ProjectManager.create();
       DndWidget.performDndWidget('button','PAGE');
@@ -34,23 +42,22 @@ describe('Basic Test', () => {
       cy.url().then((url) => {
         cy.log("Original url is " + url); 
         // After capturing the original URL, perform other actions
-        ProjectWorkspace.preview("ramcharan.kasinaboina@wavemaker.com","Wavemaker@Ram123");
+        ProjectWorkspace.preview(userCredentials.email, userCredentials.password);
         cy.get("button[name='button1']").should('be.visible');
         cy.wait(5000);
         // Now visit the original URL (ensure it's available after capturing)
         cy.visit(url, { failOnStatusCode: false });
+      }).then(() => {
+        // ✅ Cleanup step
+        ProjectManager.deleteCreatedProject(projectName);
       });
   });
 });
 
 
-describe('Test LDAP ', () => {
-  beforeEach(() => {
-    const userCredentials = {
-      email: 'sumashree.pendela@wavemaker.com',
-      password: 'Wavemaker@123'
-    };
+describe(`Test LDAP${i}`, () => {
 
+  beforeEach(() => {
     cy.session(
       [userCredentials.email,userCredentials.password], 
       () => {
@@ -62,8 +69,12 @@ describe('Test LDAP ', () => {
     cy.getAllCookies().then((cookies) => {
       cy.log(JSON.stringify(cookies, null, 2)); 
     });
+    
+    cy.getCookie('JSESSIONID').then((cookie) => {
+      Cypress.env('CJSESSIONID', cookie.value);
+    });
   });
-  it('Verifies Ldap security', () => {
+  it(`Verifies Ldap security${i}`, () => {
       LoginPage.visit("https://www.wavemakeronline.com/");
       let projectName = ProjectManager.create();
       DndWidget.performDndWidget('button','PAGE');
@@ -95,11 +106,15 @@ describe('Test LDAP ', () => {
       cy.xpath("//div[contains(@class, 'right-action-bar')]//button[contains(text(), 'Save')]").should('not.exist');
 
       cy.url().then((url) => {
-        ProjectWorkspace.preview("ramcharan.kasinaboina@wavemaker.com","Wavemaker@Ram123");
+        ProjectWorkspace.preview(userCredentials.email,userCredentials.password);
         LoginPage.basicPreviewLogin('wmqa','wm3q9u536');
         cy.get("button[name='button1']").should('be.visible');
         // Now visit the original URL (ensure it's available after capturing)
         cy.visit(url, { failOnStatusCode: false });
+      }).then(() => {
+        // ✅ Cleanup step
+        ProjectManager.deleteCreatedProject(projectName);
       });
   });
 });
+}
