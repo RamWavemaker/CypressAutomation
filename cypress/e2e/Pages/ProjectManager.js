@@ -1,7 +1,7 @@
 class ProjectManager {
 
     clickAppsTab() {
-        cy.get("a[name='appsLink']").should('be.visible').should('not.be.disabled').click();
+        cy.get("a[name='appsLink']").should("exist").should('be.visible').should('not.be.disabled').click();
     }
     
     generateProjectName(){
@@ -9,9 +9,9 @@ class ProjectManager {
         return`Cy_${randomName}`;
     }
 
-
-    generateProjectName(projectName){
-        return `Cy_${projectName}`;
+    generateZipProjectName(projectName){
+        const randomName = Math.random().toString(36).substring(2, 8);
+        return `Cy_${projectName}_${randomName}`;
     }
 
     create(){
@@ -24,8 +24,18 @@ class ProjectManager {
         cy.get("[aria-label='Continue']").click();
         cy.get('button[name="doneBtn_wizardCreateProject"]').click();
         cy.get("div[class='wm-application-view']").should('be.visible');
-        cy.wait(5000);
         return projectName;
+    }
+
+    createPrefab(){
+      cy.get("a[name='prefabsLink']").should('be.visible').should('not.be.disabled').click();
+      cy.get("[name='buttonCreatePrefab']").should('be.visible').click();
+      const projectName = this.generateProjectName();
+      cy.get("input[name='textBoxProjectName_formWidget']").should('be.visible').type(projectName);
+      cy.get("textarea[name='description_formWidget']").should('be.visible').type(projectName);
+      cy.get("button[name='nextBtn_wizardCreatePrefab']").should('be.visible').click();
+      cy.get("button[name='doneBtn_wizardCreatePrefab']").should('be.visible').click();
+      return projectName;
     }
 
     projectDetails(studioProjectId) {
@@ -116,8 +126,43 @@ class ProjectManager {
         return cy.wrap(response.body);
       });
     }
-    
-      
+
+    deleteCreatedProject(projectName){
+      const url = `https://www.wavemakeronline.com/edn-services/rest/projects`
+      const jsessionId = Cypress.env('CJSESSIONID');
+      return cy.request({
+        method: 'GET',
+        url,
+        headers: {
+          'Cookie': `JSESSIONID=${jsessionId}`,
+        }
+      }).then(response => {
+        if (response.status === 200) {
+          const allProjects = response.body;
+          cy.log(allProjects.content[0].projectId);
+          cy.log(JSON.stringify(response.body));
+          let matchedProjectId = this.getProjectIdByProjname(allProjects,projectName);
+          cy.log(matchedProjectId);
+          this.deleteProject(matchedProjectId);
+        } else {
+          console.warn("Api failed");
+        }
+        return cy.wrap(response.body);
+      });
+    }
+
+
+    getProjectIdByProjname(allProjects, projectName) {
+      const length = allProjects.content.length;
+      for (let i = 0; i < length; i++) {
+        const project = allProjects.content[i];
+        cy.log(`ProjectName ${projectName} cameProject ${project.name}`);
+        if (project.name === projectName) {
+          return project.projectId; // or return project.studioProjectId;
+        }
+      }
+      return null; // if not found
+    }  
 }
 
 export default new ProjectManager();

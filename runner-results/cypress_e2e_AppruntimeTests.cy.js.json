@@ -1,0 +1,10 @@
+{
+  "suites": 1,
+  "tests": 1,
+  "passes": 0,
+  "pending": 0,
+  "failures": 1,
+  "start": "2025-05-01T10:12:46.796Z",
+  "duration": 23970,
+  "file": "cypress/e2e/AppruntimeTests.cy.js"
+}

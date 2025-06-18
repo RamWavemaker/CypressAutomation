@@ -1,0 +1,19 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: cypress-job-{{JOB_ID}}
+spec:
+  template:
+    spec:
+      containers:
+      - name: cypress
+        image: ramcharan7431/cypress-tests:1.0
+        command: ["npx", "cypress", "run", "--spec", "{{SPEC_FILE}}"]
+        resources:
+          requests:
+            memory: "1Gi"
+            cpu: "1"
+          limits:
+            memory: "1Gi"
+            cpu: "1"
+      restartPolicy: Never

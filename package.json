@@ -2,10 +2,7 @@
   "name": "cypressautomation",
   "version": "1.0.0",
   "main": "index.js",
-  "scripts": {
-    "test": "npx cypress run",
-    "cy:parallel": "cypress-parallel -d cypress/e2e/ -t 2 -s test"
-  },
+  "scripts": {},
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -14,11 +11,13 @@
     "@4tw/cypress-drag-drop": "^2.3.0",
     "@types/cypress": "^1.1.6",
     "@types/node": "^22.14.0",
-    "allure-cypress": "^3.2.1",
-    "cypress": "^14.2.1",
+    "allure-cypress": "^3.2.2",
+    "cypress": "^14.4.1",
     "cypress-iframe": "^1.0.1",
     "cypress-xpath": "^2.0.1",
-    "jquery": "^3.7.1"
+    "jquery": "^3.7.1",
+    "patch-package": "^8.0.0",
+    "postinstall-postinstall": "^2.1.0"
   },
   "dependencies": {
     "aws-sdk": "^2.1692.0",

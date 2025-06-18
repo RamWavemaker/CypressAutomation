@@ -5,68 +5,14 @@ import ProjectWorkspace from './Pages/ProjectWorkspace';
 import $ from 'jquery';
 import 'cypress-iframe';
 import ProjectManager from './Pages/ProjectManager';
+//clean
+const RUN_COUNT = 20;
 
-const userCredentials = {
-    email: 'ramcharan.kasinaboina@wavemaker.com',
-    password: 'Wavemaker@Ram123'
-  };
-
-describe.skip('Ifrmae Test', () => {
-  beforeEach(() => {
-
-    cy.session(
-      [userCredentials.email,userCredentials.password], 
-      () => {
-        LoginPage.visit("https://www.wavemakeronline.com/");
-        LoginPage.login(userCredentials.email, userCredentials.password);
-        
-      },
-      { cacheAcrossSpecs: true }
-    );
-
-    cy.getAllCookies().then((cookies) => {
-      cy.log(JSON.stringify(cookies, null, 2)); 
-    });
-    
-  });
-  it.skip('Verifies the title', () => {
-      LoginPage.visit("https://www.wavemakeronline.com/");
-      let projectName = ProjectManager.create();
-      DndWidget.performDndWidget('iframe');
-      cy.xpath("//span[@class='wm-heading' and text()='Page Structure']").click();
-      cy.get("[name='wm-widget-group-widgets-tree'] input").type('iframe1');
-      cy.get("a[data-searchkey='iframe1']").click();
-      cy.get("input[data-identifier='property-iframesrc']").type("https://docs.wavemaker.com/learn/");
-      cy.get("[data-identifier='property-width']").clear().type('800px');
-      cy.get("[data-identifier='property-height']").clear().type('500px');
-      ProjectWorkspace.saveWorkSpace();
-      cy.wait(2000);
-      cy.url().then((url) => {
-        cy.log("Original url is " + url); 
-        // After capturing the original URL, perform other actions
-        ProjectWorkspace.preview("ramcharan.kasinaboina@wavemaker.com","Wavemaker@Ram123");
-        cy.url().then((url) =>{
-          cy.origin('https://docs.wavemaker.com', () => {
-            cy.visit('https://docs.wavemaker.com/learn/');
-            cy.get('#docsearch-input').should('exist');
-            cy.get('#docsearch-input').should('be.visible').type('Inspection Framework', { delay: 100 });
-            cy.wait(5000);
-            cy.get('[id="docsearch-item-0"]').click();
-            cy.contains('h1', 'Inspection Framework').should('exist');
-          });
-          cy.wait(2000);
-          cy.visit(url,{ failOnStatusCode: false });
-        });
-        cy.wait(5000);
-        // Now visit the original URL (ensure it's available after capturing)
-        cy.visit(url, { failOnStatusCode: false });
-      });
-  });
-});
+// for (let i = 1; i <= RUN_COUNT; i++) {
 
 
-describe(' Iframe W3Schools Test', () => {
-  it('Clicks search icon and types into tnb-google-search-input', () => {
+describe(`Iframe W3Schools Test`, () => {   //-${i}
+  it(`Iframe Test`, () => {
     cy.visit('https://www.w3schools.com/tags/tryit.asp?filename=tryhtml_iframe');
     cy.frameLoaded('#iframeResult');
     cy.iframe('#iframeResult').within(() => {
@@ -79,7 +25,6 @@ describe(' Iframe W3Schools Test', () => {
             .clear()
             .type('SQL Tutorial {enter}')
         });
-        cy.wait(20000);
 
         // Re-fetch the iframe again to access the new page content
         cy.get('iframe').then(($newIframe) => {
@@ -90,3 +35,4 @@ describe(' Iframe W3Schools Test', () => {
     });
   });
 });
+// }

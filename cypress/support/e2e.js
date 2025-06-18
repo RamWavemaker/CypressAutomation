@@ -18,31 +18,32 @@ import './commands'
 
 import 'cypress-xpath';
 
-import '@4tw/cypress-drag-drop'
+import '@4tw/cypress-drag-drop';
 
 import "allure-cypress";
+import addAttachment from 'allure-cypress';
 
-Cypress.on('uncaught:exception', (err, runnable) => {
-    // Ignore renderProps() bug from Allure
-    if (err.message.includes('renderProps is not a function')) {
-      return false; // prevents test from failing
-    }
+
+Cypress.on('test:after:run', (test, runnable) => {
+    if (test.state === 'failed') {
+      const specName = Cypress.spec.name;
+      const screenshotFileName = `${runnable.parent.title} -- ${test.title} (failed).png`;
+      const screenshotPath = `cypress/screenshots/${specName}/${screenshotFileName}`;
   
-    // Let other exceptions fail the test
-    return true;
+      addAttachment('Screenshot on failure', screenshotPath, 'image/png');
+    }
 });
 
-Cypress.on('fail', (error, runnable) => {
-  try {
-    const testTitle = `${runnable.parent.title} -- ${runnable.title}`;
-    const screenshotFileName = `${testTitle} (failed).png`;
-    const screenshotPath = `cypress/screenshots/${Cypress.spec.name}/${screenshotFileName}`;
-
-    // Attach screenshot
-    addAttachment('Screenshot on Failure', screenshotPath, 'image/png');
-  } catch (err) {
-    console.warn('❗ Error attaching screenshot to Allure:', err.message);
+Cypress.on('uncaught:exception', (err) => {
+  if (err.message.includes('renderProps')) {
+    // Suppress that specific error
+    return false;
   }
 
-  throw error; // Always rethrow to let the test fail
+  // Optional: suppress cy.origin serialization error if you're not doing cross-domain data sharing
+  if (err.message.includes('cy.origin() could not serialize the subject')) {
+    return false;
+  }
+
+  return true; // Let all other errors fail the test
 });

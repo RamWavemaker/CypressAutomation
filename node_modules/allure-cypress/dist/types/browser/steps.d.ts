@@ -1,0 +1,14 @@
+import type { StatusDetails } from "allure-js-commons";
+import { Status } from "allure-js-commons";
+import type { ApiStepDescriptor, LogStepDescriptor, StepDescriptor } from "../types.js";
+export declare const ALLURE_STEP_CMD_SUBJECT: {};
+export declare const isApiStep: (descriptor: StepDescriptor) => descriptor is ApiStepDescriptor;
+export declare const isLogStep: (descriptor: StepDescriptor) => descriptor is LogStepDescriptor;
+export declare const startAllureApiStep: (name: string) => void;
+export declare const pushAllureStep: () => string;
+export declare const reportStepError: (error: Error) => void;
+export declare const stopCurrentAllureApiStep: (status?: Status, statusDetails?: StatusDetails) => void;
+export declare const findAndStopStepWithSubsteps: (pred: (stepEntry: StepDescriptor) => boolean, status?: Status, statusDetails?: StatusDetails) => void;
+export declare const stopAllSteps: (status?: Status, statusDetails?: StatusDetails) => void;
+export declare const finalizeSteps: () => void;
+export declare const resolveStepStatus: (step: StepDescriptor) => Status;

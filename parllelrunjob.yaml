@@ -1,0 +1,52 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: ${KUBE_JOB_NAME}
+  namespace: ${NAMESPACE}
+spec:
+  template:
+    spec:
+      containers:
+        - name: cypress
+          image: ${IMAGE_NAME}
+          resources:
+            requests:
+              memory: "2Gi"
+              cpu: "1"
+            limits:
+              memory: "3Gi"
+              cpu: "2"
+          command: ["/bin/sh", "-c"]
+          args:
+            - >
+              set -x ;
+              echo "📁 BEFORE Cypress run: contents of project root" ;
+              ls -R ;
+
+              echo "🚀 Running Cypress..." ;
+              npx cypress run --spec "${SPEC_FILES}" --env allureResultsPath=${ALLURE_DIR} ;
+              EXIT_CODE=$? ;
+
+              echo "🧪 Cypress Exit Code: $EXIT_CODE" ;
+
+              echo "📁 AFTER Cypress run: checking ${ALLURE_DIR}" ;
+              ls -la ${ALLURE_DIR} || echo "❌ Allure directory not found" ;
+
+              echo "☁️ Uploading to S3..." ;
+              aws s3 cp "${ALLURE_DIR}" "s3://wm-qa-automation/${JOB_NAME}/${BUILD_NUMBER}/${ALLURE_DIR}" --recursive --acl public-read ;
+
+              echo "✅ Uploaded to s3://wm-qa-automation/${JOB_NAME}/${BUILD_NUMBER}/" ;
+              exit $EXIT_CODE
+          env:
+            - name: ALLURE_RESULTS_DIR
+              value: "allure-results-worker-1"
+            - name: AWS_ACCESS_KEY_ID
+              value: "${AWS_ACCESS_KEY_ID}"
+            - name: AWS_SECRET_ACCESS_KEY
+              value: "${AWS_SECRET_ACCESS_KEY}"
+            - name: BUILD_NUMBER
+              value: "${BUILD_NUMBER}"
+            - name: ALLURE_DIR
+              value: "allure-results-worker-1"
+      restartPolicy: Never
+  backoffLimit: 0
