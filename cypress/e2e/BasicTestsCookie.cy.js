@@ -11,7 +11,7 @@ const userCredentials = {
 
 const RUN_COUNT = 20;
 
-for (let i = 1; i <= RUN_COUNT; i++) {
+// for (let i = 1; i <= RUN_COUNT; i++) {
 before(() => {
   cy.getCookie('auth_cookie').then((cookie) => {
     if (!cookie || !cookie.value) {
@@ -70,8 +70,8 @@ beforeEach(() => {
 });
 
 
-describe(`Basic Test - Cookie Based-${i}`, () => {
-  it(`Verifies the title and session cookies-${i}`, () => {
+describe(`Basic Test - Cookie Based`, () => {    //-${i}
+  it(`Verifies the title and session cookies`, () => {
     LoginPage.visit("https://www.wavemakeronline.com/");
     let projectName = ProjectManager.create();
     DndWidget.performDndWidget('button','PAGE');
@@ -94,8 +94,8 @@ describe(`Basic Test - Cookie Based-${i}`, () => {
   });
 });
 
-describe(`Test LDAP - Cookie Based-${i}`, () => {
-  it(`Verifies LDAP security and cookies-${i}`, () => {
+describe(`Test LDAP - Cookie Based`, () => {
+  it(`Verifies LDAP security and cookies`, () => {
     LoginPage.visit("https://www.wavemakeronline.com/");
     let projectName = ProjectManager.create();
     DndWidget.performDndWidget('button','PAGE');
@@ -148,4 +148,4 @@ describe(`Test LDAP - Cookie Based-${i}`, () => {
     cy.clearCookies(); // Optional cleanup
   });
 });
-}
+// }

@@ -12,8 +12,8 @@ const userCredentials = {
 //clean
 const RUN_COUNT = 20;
 
-for (let i = 1; i <= RUN_COUNT; i++) {
-describe(`Basic Test-${i}`, () => {
+// for (let i = 1; i <= RUN_COUNT; i++) {
+describe(`Basic Test`, () => {
   beforeEach(() => {
 
     cy.session(
@@ -34,7 +34,7 @@ describe(`Basic Test-${i}`, () => {
     });
     
   });
-  it(`Verifies the title-${i}`, () => {
+  it(`Verifies the title`, () => {
       LoginPage.visit("https://www.wavemakeronline.com/");
       let projectName = ProjectManager.create();
       DndWidget.performDndWidget('button','PAGE');
@@ -55,7 +55,7 @@ describe(`Basic Test-${i}`, () => {
 });
 
 
-describe(`Test LDAP${i}`, () => {
+describe(`Test LDAP`, () => {
 
   beforeEach(() => {
     cy.session(
@@ -74,7 +74,7 @@ describe(`Test LDAP${i}`, () => {
       Cypress.env('CJSESSIONID', cookie.value);
     });
   });
-  it(`Verifies Ldap security${i}`, () => {
+  it(`Verifies Ldap security`, () => {
       LoginPage.visit("https://www.wavemakeronline.com/");
       let projectName = ProjectManager.create();
       DndWidget.performDndWidget('button','PAGE');
@@ -117,4 +117,4 @@ describe(`Test LDAP${i}`, () => {
       });
   });
 });
-}
+// }

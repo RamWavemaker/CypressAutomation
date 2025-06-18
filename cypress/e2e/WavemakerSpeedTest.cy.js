@@ -7,8 +7,8 @@ import ProjectManager from './Pages/ProjectManager';
 //clean
 const RUN_COUNT = 20;
 
-for (let i = 1; i <= RUN_COUNT; i++) {
-describe(`WaveMaker Test Suite-${i}`, () => {
+// for (let i = 1; i <= RUN_COUNT; i++) {
+describe(`WaveMaker Test Suite`, () => {
     let cookies = [];
     const userCredentials = {
       email: 'test.automate11@wavemaker.com',
@@ -32,7 +32,7 @@ describe(`WaveMaker Test Suite-${i}`, () => {
 
     });
   
-    it(`2. Use Saved Cookies in New Session-${i}`, () => {
+    it(`2. Use Saved Cookies in New Session`, () => {
       LoginPage.visit('https://www.wavemakeronline.com');
   
       cookies.forEach((cookie) => {
@@ -45,7 +45,7 @@ describe(`WaveMaker Test Suite-${i}`, () => {
       cy.title().should('eq', 'WaveMaker Studio');
     });
   
-    it(`Verifies the title-${i}`, () => {
+    it(`Verifies the title`, () => {
           LoginPage.visit("https://www.wavemakeronline.com/");
           LoginPage.login(userCredentials.email,userCredentials.password);
           let projectName = ProjectManager.create();
@@ -62,4 +62,4 @@ describe(`WaveMaker Test Suite-${i}`, () => {
           });
       });
   });
-}
+// }

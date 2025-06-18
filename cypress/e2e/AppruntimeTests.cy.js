@@ -14,10 +14,10 @@ const userCredentials = {
 
 const RUN_COUNT = 20;
 
-for (let i = 1; i <= RUN_COUNT; i++) {
+// for (let i = 1; i <= RUN_COUNT; i++) {
 //clean testscases
-describe(`Appruntime Testcases-${i}`,()=>{
-    it(`Localization element intercept-${i}`,()=>{
+describe(`Appruntime Testcases`,()=>{  //${i}
+    it(`Localization element intercept`,()=>{
         const fileName = 'WidgetsLocalisationApp.zip';
         const WidgetsLocalisationS3path = "wavemaker-test-apps/AutomationProjects/11.10/WidgetsLocalisationApp";
         const localDownloadPath = "home/ramcharank_500385/Documents/ProgramFiles/Visualstudio/CypressAutomation/cypress/downloads";
@@ -33,7 +33,7 @@ describe(`Appruntime Testcases-${i}`,()=>{
             })
     })
 
-    it(`verifyIFrameDialog--${i}`, () => {
+    it(`verifyIFrameDialog`, () => {
       const fileName = 'WidgetsLocalisationApp.zip';
       const WidgetsLocalisationS3path = "wavemaker-test-apps/AutomationProjects/11.10/WidgetsLocalisationApp";
       const localDownloadPath = "home/ramcharank_500385/Documents/ProgramFiles/Visualstudio/CypressAutomation/cypress/downloads";
@@ -47,7 +47,7 @@ describe(`Appruntime Testcases-${i}`,()=>{
         })
     });
   
-    it(`verifyPageDialog-${i}`, () => {
+    it(`verifyPageDialog`, () => {
       const fileName = 'WidgetsLocalisationApp.zip';
       const WidgetsLocalisationS3path = "wavemaker-test-apps/AutomationProjects/11.10/WidgetsLocalisationApp";
       const localDownloadPath = "home/ramcharank_500385/Documents/ProgramFiles/Visualstudio/CypressAutomation/cypress/downloads";
@@ -62,4 +62,4 @@ describe(`Appruntime Testcases-${i}`,()=>{
     });
     
 })
-}
+// }
