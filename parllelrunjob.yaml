@@ -21,7 +21,7 @@ spec:
             - >
               set -x ;
               echo "📁 BEFORE Cypress run: contents of project root" ;
-              ls -R ;
+              ls -la ;
 
               echo "🚀 Running Cypress..." ;
               npx cypress run --spec "${SPEC_FILES}" --env allureResultsPath=${ALLURE_DIR} ;
@@ -30,6 +30,8 @@ spec:
               echo "🧪 Cypress Exit Code: $EXIT_CODE" ;
 
               echo "📁 AFTER Cypress run: checking ${ALLURE_DIR}" ;
+              sleep 10
+              ls -la ;
               ls -la ${ALLURE_DIR} || echo "❌ Allure directory not found" ;
 
               echo "☁️ Uploading to S3..." ;

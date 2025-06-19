@@ -6,7 +6,7 @@ class AppRuntimeUtils{
 
   previewAppRuntime(userEmail,userPassword,fileName,s3path,localdownloadPath,projectType){
     const WidgetsLocalisationS3path = `jira/wavemaker-test-apps/AutomationProjects/11.10/WidgetsLocalisationApp/WidgetsLocalisationApp.zip`;
-    const localDownloadPath = `/${localdownloadPath}//${fileName}`;
+    const localDownloadPath = localdownloadPath;
     return LoginPage.loginApi(userEmail,userPassword)
     .then(()=>{
       return cy.task('downloadFileFromS3', {
@@ -21,6 +21,7 @@ class AppRuntimeUtils{
     }).then(()=>{
       // let projectName = ProjectManager.generateProjectName();
       let projectName = ProjectManager.generateZipProjectName(fileName.replace(/\.zip$/i, ''));
+      Cypress.env('SHOULDDELETEPROJNAME', projectName);
       return ProjectManager.importWavemakerProject(fileName,projectType,projectName);
     })
     .then((studioProjectId)=> {
