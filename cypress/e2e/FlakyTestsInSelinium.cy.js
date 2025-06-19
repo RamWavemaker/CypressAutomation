@@ -14,6 +14,8 @@ const userCredentials = {
 //clean
 // const RUN_COUNT = 20;
 
+let projectName = null;
+
 // for (let i = 1; i <= RUN_COUNT; i++) {
 describe(`WidgetPropertiesTest`, () => { //${i}
 
@@ -39,7 +41,7 @@ describe(`WidgetPropertiesTest`, () => { //${i}
 
   it(`selectFirstRecordInMultiSelect`, () => {
     LoginPage.visit("https://www.wavemakeronline.com/");
-    let projectName = ProjectManager.create();
+    projectName = ProjectManager.create();
     ProjectWorkspace.addDataBase('HRDB');
     DndWidget.datatableDrop('table');
     ProjectWorkspace.openPageStructureAndSearchWidget('UserTable1');
@@ -88,7 +90,7 @@ describe(`ImportSampleDBTest`, () => {
   });
   it(`verifyHrdbDBCrudOperations`, () => {   //success
     cy.visit("https://www.wavemakeronline.com/");
-    let projectName = ProjectManager.create();
+    projectName = ProjectManager.create();
     DndWidget.performDndWidget('label','PAGE');
     ProjectWorkspace.addDataBase('HRDB');
     DndWidget.performDndWidget('table', 'PAGE');
@@ -150,7 +152,7 @@ describe(`RestServiceTest`, () => {
   });
   it(`importRestServiceWebApp`, () => {
     LoginPage.visit("https://www.wavemakeronline.com/");
-    let projectName = ProjectManager.create();
+    projectName = ProjectManager.create();
     ApiDesginer.importRestApi('https://maps.googleapis.com/maps/api/directions/xml?origin=Toronto&destination=Montreal&sensor=false', 'googleapis', null);
     ApiDesginer.importRestApi('https://api.fda.gov/drug/event.json?search=patient.drug.openfda.pharm_class_epc:"nonsteroidal+anti-inflammatory+drug"&count=patient.reaction.reactionmeddrapt.exact', 'fdaservice', null);
     ProjectWorkspace.goToPages();
@@ -198,4 +200,12 @@ describe(`RestServiceTest`, () => {
     });
   })
 });
+
+
+afterEach(() =>{
+  if(projectName!=null){
+    cy.wait(2000);
+    ProjectManager.deleteCreatedProject(projectName);
+  }
+})
 // }

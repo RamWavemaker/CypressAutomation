@@ -142,8 +142,10 @@ class ProjectManager {
           cy.log(allProjects.content[0].projectId);
           cy.log(JSON.stringify(response.body));
           let matchedProjectId = this.getProjectIdByProjname(allProjects,projectName);
-          cy.log(matchedProjectId);
-          this.deleteProject(matchedProjectId);
+          if(matchedProjectId != null){
+            cy.log(matchedProjectId);
+            this.deleteProject(matchedProjectId);
+          }
         } else {
           console.warn("Api failed");
         }

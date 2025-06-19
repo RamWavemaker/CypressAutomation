@@ -69,11 +69,12 @@ beforeEach(() => {
   }
 });
 
+let projectName = null;
 
 describe(`Basic Test - Cookie Based`, () => {    //-${i}
   it(`Verifies the title and session cookies`, () => {
     LoginPage.visit("https://www.wavemakeronline.com/");
-    let projectName = ProjectManager.create();
+    projectName = ProjectManager.create();
     DndWidget.performDndWidget('button','PAGE');
 
     ProjectWorkspace.saveWorkSpace();
@@ -92,12 +93,19 @@ describe(`Basic Test - Cookie Based`, () => {    //-${i}
   after(() => {
     cy.clearCookies(); // Optional cleanup
   });
+
+  afterEach(() => {
+    if(projectName!=null){
+      cy.wait(2000);
+      ProjectManager.deleteCreatedProject(projectName);
+    }
+  });
 });
 
 describe(`Test LDAP - Cookie Based`, () => {
   it(`Verifies LDAP security and cookies`, () => {
     LoginPage.visit("https://www.wavemakeronline.com/");
-    let projectName = ProjectManager.create();
+    projectName = ProjectManager.create();
     DndWidget.performDndWidget('button','PAGE');
 
     // Navigate to security settings
@@ -146,6 +154,13 @@ describe(`Test LDAP - Cookie Based`, () => {
 
   after(() => {
     cy.clearCookies(); // Optional cleanup
+  });
+
+  afterEach(() => {
+    if(projectName!=null){
+      cy.wait(2000);
+      ProjectManager.deleteCreatedProject(projectName);
+    }
   });
 });
 // }

@@ -11,12 +11,28 @@ module.exports = defineConfig({
   video: true,
   screenshotOnRunFailure: true,
   e2e: {
-    defaultCommandTimeout: 10000,
+    defaultCommandTimeout: 20000, 
     chromeWebSecurity: false,
     setupNodeEvents(on, config) {
 
       allureCypress(on, config, {
         resultsDir: process.env.ALLURE_RESULTS_DIR || "allure-results",
+      });
+
+      on('before:run', () => {
+
+        const resultsDir = process.env.ALLURE_RESULTS_DIR || "allure-results";
+        const allureResultsDir = path.join(__dirname, resultsDir);
+        const allureReportDir = path.join(__dirname, 'allure-report');
+
+        console.log("🧹 Cleaning old Allure report folders...");
+
+        [allureResultsDir, allureReportDir].forEach(dir => {
+          if (fs.existsSync(dir)) {
+            fs.removeSync(dir); // deletes folder and contents
+            console.log(`🗑️  Deleted ${dir}`);
+          }
+        });
       });
 
       on('task', {

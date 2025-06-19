@@ -44,11 +44,13 @@ describe(`WaveMaker Test Suite`, () => {
       cy.url().should('include', '/projects/#/ManageRecents');
       cy.title().should('eq', 'WaveMaker Studio');
     });
-  
+
+
+    let projectName = null;
     it(`Verifies the title`, () => {
           LoginPage.visit("https://www.wavemakeronline.com/");
           LoginPage.login(userCredentials.email,userCredentials.password);
-          let projectName = ProjectManager.create();
+          projectName = ProjectManager.create();
           DndWidget.performDndWidget('button','PAGE');
           ProjectWorkspace.saveWorkSpace();
           cy.url().then((url) => {
@@ -56,10 +58,14 @@ describe(`WaveMaker Test Suite`, () => {
             // After capturing the original URL, perform other actions
             ProjectWorkspace.preview(userCredentials.email,userCredentials.password);
             cy.get("button[name='button1']").should('be.visible');
-          }).then(() => {
-              // ✅ Cleanup step
-              ProjectManager.deleteCreatedProject(projectName);
-          });
+          })
       });
+
+      after(() =>{
+        if(projectName != null){
+          cy.wait(2000);
+          ProjectManager.deleteCreatedProject(projectName);
+        }
+      })
   });
 // }
