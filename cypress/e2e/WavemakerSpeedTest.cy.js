@@ -7,8 +7,8 @@ import ProjectManager from './Pages/ProjectManager';
 //clean
 const RUN_COUNT = 20;
 
-for (let i = 1; i <= RUN_COUNT; i++) {
-describe(`WaveMaker Test Suite-${i}`, () => {
+// for (let i = 1; i <= RUN_COUNT; i++) {
+describe(`WaveMaker Test Suite`, () => {
     let cookies = [];
     const userCredentials = {
       email: 'test.automate11@wavemaker.com',
@@ -32,7 +32,7 @@ describe(`WaveMaker Test Suite-${i}`, () => {
 
     });
   
-    it(`2. Use Saved Cookies in New Session-${i}`, () => {
+    it(`2. Use Saved Cookies in New Session`, () => {
       LoginPage.visit('https://www.wavemakeronline.com');
   
       cookies.forEach((cookie) => {
@@ -44,11 +44,13 @@ describe(`WaveMaker Test Suite-${i}`, () => {
       cy.url().should('include', '/projects/#/ManageRecents');
       cy.title().should('eq', 'WaveMaker Studio');
     });
-  
-    it(`Verifies the title-${i}`, () => {
+
+
+    let projectName = null;
+    it(`Verifies the title`, () => {
           LoginPage.visit("https://www.wavemakeronline.com/");
           LoginPage.login(userCredentials.email,userCredentials.password);
-          let projectName = ProjectManager.create();
+          projectName = ProjectManager.create();
           DndWidget.performDndWidget('button','PAGE');
           ProjectWorkspace.saveWorkSpace();
           cy.url().then((url) => {
@@ -56,10 +58,14 @@ describe(`WaveMaker Test Suite-${i}`, () => {
             // After capturing the original URL, perform other actions
             ProjectWorkspace.preview(userCredentials.email,userCredentials.password);
             cy.get("button[name='button1']").should('be.visible');
-          }).then(() => {
-              // ✅ Cleanup step
-              ProjectManager.deleteCreatedProject(projectName);
-          });
+          })
       });
+
+      after(() =>{
+        if(projectName != null){
+          cy.wait(2000);
+          ProjectManager.deleteCreatedProject(projectName);
+        }
+      })
   });
-}
+// }

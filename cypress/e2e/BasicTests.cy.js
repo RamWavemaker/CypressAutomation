@@ -12,8 +12,9 @@ const userCredentials = {
 //clean
 const RUN_COUNT = 20;
 
-for (let i = 1; i <= RUN_COUNT; i++) {
-describe(`Basic Test-${i}`, () => {
+// for (let i = 1; i <= RUN_COUNT; i++) {
+describe(`Basic Test`, () => {
+  let projectName = null;
   beforeEach(() => {
 
     cy.session(
@@ -34,9 +35,9 @@ describe(`Basic Test-${i}`, () => {
     });
     
   });
-  it(`Verifies the title-${i}`, () => {
+  it(`Verifies the title`, () => {
       LoginPage.visit("https://www.wavemakeronline.com/");
-      let projectName = ProjectManager.create();
+      projectName = ProjectManager.create();
       DndWidget.performDndWidget('button','PAGE');
       ProjectWorkspace.saveWorkSpace();
       cy.url().then((url) => {
@@ -47,15 +48,21 @@ describe(`Basic Test-${i}`, () => {
         cy.wait(5000);
         // Now visit the original URL (ensure it's available after capturing)
         cy.visit(url, { failOnStatusCode: false });
-      }).then(() => {
-        // ✅ Cleanup step
-        ProjectManager.deleteCreatedProject(projectName);
-      });
+      })
   });
+
+  afterEach(() =>{
+    if(projectName!=null){
+      cy.wait(3000);
+      ProjectManager.deleteCreatedProject(projectName);
+    }
+  })
 });
 
 
-describe(`Test LDAP${i}`, () => {
+describe(`Test LDAP`, () => {
+
+  let projectName = null;
 
   beforeEach(() => {
     cy.session(
@@ -74,9 +81,9 @@ describe(`Test LDAP${i}`, () => {
       Cypress.env('CJSESSIONID', cookie.value);
     });
   });
-  it(`Verifies Ldap security${i}`, () => {
+  it(`Verifies Ldap security`, () => {
       LoginPage.visit("https://www.wavemakeronline.com/");
-      let projectName = ProjectManager.create();
+      projectName = ProjectManager.create();
       DndWidget.performDndWidget('button','PAGE');
       //Navigate to security settings
       cy.get('button[name="wm-category-settings"]').click();
@@ -111,10 +118,15 @@ describe(`Test LDAP${i}`, () => {
         cy.get("button[name='button1']").should('be.visible');
         // Now visit the original URL (ensure it's available after capturing)
         cy.visit(url, { failOnStatusCode: false });
-      }).then(() => {
-        // ✅ Cleanup step
-        ProjectManager.deleteCreatedProject(projectName);
       });
   });
+
+  afterEach(() =>{
+    if(projectName!=null){
+      cy.wait(3000);
+      ProjectManager.deleteCreatedProject(projectName);
+    }
+  })
+
 });
-}
+// }

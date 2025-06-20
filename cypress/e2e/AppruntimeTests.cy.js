@@ -6,6 +6,7 @@ import AppRuntimeUtils from "../utils/AppRuntimeUtils";
 import FlakyTestsInSeliniumRunPage from "./RunPages/FlakyTestsInSeliniumRunPage";
 import ApiDesginer from "./Pages/ApiDesginer";
 import WorkSpacePage from "./Pages/WorkSpacePage";
+const getDownloadPath = require("../utils/pathHelper");
 
 const userCredentials = {
   email: 'nagesh.bonagiri@wavemaker.com',
@@ -14,13 +15,16 @@ const userCredentials = {
 
 const RUN_COUNT = 20;
 
-for (let i = 1; i <= RUN_COUNT; i++) {
+// for (let i = 1; i <= RUN_COUNT; i++) {
 //clean testscases
-describe(`Appruntime Testcases-${i}`,()=>{
-    it(`Localization element intercept-${i}`,()=>{
+describe(`Appruntime Testcases`,()=>{  //${i}
+    it(`Localization element intercept`,()=>{
         const fileName = 'WidgetsLocalisationApp.zip';
+        cy.log("📦 File name being passed:", fileName);  // ✅ Add this
         const WidgetsLocalisationS3path = "wavemaker-test-apps/AutomationProjects/11.10/WidgetsLocalisationApp";
-        const localDownloadPath = "home/ramcharank_500385/Documents/ProgramFiles/Visualstudio/CypressAutomation/cypress/downloads";
+        // ✅ Use imported helper instead of path.join
+        const localDownloadPath = getDownloadPath(fileName);
+        cy.log("📁 Resolved download path:", localDownloadPath);
         AppRuntimeUtils.previewAppRuntime(userCredentials.email, userCredentials.password, fileName, WidgetsLocalisationS3path, localDownloadPath, 'PROJECT')
             .then(() => {
                 cy.get('select[name="select1"]').select('العربية');
@@ -33,10 +37,10 @@ describe(`Appruntime Testcases-${i}`,()=>{
             })
     })
 
-    it(`verifyIFrameDialog--${i}`, () => {
+    it(`verifyIFrameDialog`, () => {
       const fileName = 'WidgetsLocalisationApp.zip';
       const WidgetsLocalisationS3path = "wavemaker-test-apps/AutomationProjects/11.10/WidgetsLocalisationApp";
-      const localDownloadPath = "home/ramcharank_500385/Documents/ProgramFiles/Visualstudio/CypressAutomation/cypress/downloads";
+      const localDownloadPath = getDownloadPath(fileName);
       AppRuntimeUtils.previewAppRuntime(userCredentials.email, userCredentials.password, fileName, WidgetsLocalisationS3path, localDownloadPath, 'PROJECT')
         .then(() => {
           FlakyTestsInSeliniumRunPage.verifyIFrameDialog();
@@ -47,10 +51,10 @@ describe(`Appruntime Testcases-${i}`,()=>{
         })
     });
   
-    it(`verifyPageDialog-${i}`, () => {
+    it(`verifyPageDialog`, () => {
       const fileName = 'WidgetsLocalisationApp.zip';
       const WidgetsLocalisationS3path = "wavemaker-test-apps/AutomationProjects/11.10/WidgetsLocalisationApp";
-      const localDownloadPath = "home/ramcharank_500385/Documents/ProgramFiles/Visualstudio/CypressAutomation/cypress/downloads";
+      const localDownloadPath = getDownloadPath(fileName);
       AppRuntimeUtils.previewAppRuntime(userCredentials.email, userCredentials.password, fileName, WidgetsLocalisationS3path, localDownloadPath, 'PROJECT')
         .then(() => {
           FlakyTestsInSeliniumRunPage.verifyPageDialog();
@@ -60,6 +64,12 @@ describe(`Appruntime Testcases-${i}`,()=>{
           });
         })
     });
+
+    afterEach(() =>{
+      cy.wait(3000);
+      const shouldDeleteProjectName = Cypress.env('SHOULDDELETEPROJNAME');
+      ProjectManager.deleteCreatedProject(shouldDeleteProjectName);
+    })
     
 })
-}
+// }
