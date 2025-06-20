@@ -33,7 +33,7 @@ spec:
               echo "📁 AFTER Cypress run: checking ${ALLURE_DIR}" ;
               sleep 10;
               ls;
-              ls -la ${ALLURE_DIR} || echo "❌ Allure directory not found" ;
+              ls -la allure-results || echo "❌ Allure directory not found" ;
 
               echo "☁️ Uploading to S3....." ;
               aws s3 cp "allure-results" "s3://wm-qa-automation/${JOB_NAME}/${BUILD_NUMBER}/${ALLURE_DIR}" --recursive --acl public-read ;
