@@ -22,9 +22,10 @@ spec:
               set -x ;
               echo "📁 BEFORE Cypress run: contents of project root" ;
               ls;
-
+              rm -rf allure-results;
+              ls;
               echo "🚀 Running Cypress..." ;
-              echo "${ALLURE_DIR}"
+              echo "${ALLURE_DIR}";
               npx cypress run --spec "${SPEC_FILES}" --env allureResultsPath=${ALLURE_DIR} ;
               EXIT_CODE=$? ;
 
