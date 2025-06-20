@@ -24,6 +24,7 @@ spec:
               ls;
 
               echo "🚀 Running Cypress..." ;
+              echo "${ALLURE_DIR}"
               npx cypress run --spec "${SPEC_FILES}" --env allureResultsPath=${ALLURE_DIR} ;
               EXIT_CODE=$? ;
 
@@ -35,7 +36,7 @@ spec:
               ls -la ${ALLURE_DIR} || echo "❌ Allure directory not found" ;
 
               echo "☁️ Uploading to S3..." ;
-              aws s3 cp "${ALLURE_DIR}" "s3://wm-qa-automation/${JOB_NAME}/${BUILD_NUMBER}/${ALLURE_DIR}" --recursive --acl public-read ;
+              aws s3 cp "allure-results" "s3://wm-qa-automation/${JOB_NAME}/${BUILD_NUMBER}/${ALLURE_DIR}" --recursive --acl public-read ;
 
               echo "✅ Uploaded to s3://wm-qa-automation/${JOB_NAME}/${BUILD_NUMBER}/" ;
               exit $EXIT_CODE
