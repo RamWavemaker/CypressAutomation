@@ -37,13 +37,13 @@ spec:
               ls -la allure-results || echo "❌ Allure directory not found" ;
 
               echo "☁️ Uploading to S3....." ;
-              aws s3 cp "allure-results" "s3://wm-qa-automation/${JOB_NAME}/${BUILD_NUMBER}/${ALLURE_DIR}" --recursive --acl public-read ;
+              aws s3 cp "${ALLURE_DIR}" "s3://wm-qa-automation/${JOB_NAME}/${BUILD_NUMBER}/${ALLURE_DIR}" --recursive --acl public-read ;
 
               echo "✅ Uploaded to s3://wm-qa-automation/${JOB_NAME}/${BUILD_NUMBER}/" ;
               exit $EXIT_CODE
           env:
             - name: ALLURE_RESULTS_DIR
-              value: "allure-results-worker-1"
+              value: "${ALLURE_DIR}"
             - name: AWS_ACCESS_KEY_ID
               value: "${AWS_ACCESS_KEY_ID}"
             - name: AWS_SECRET_ACCESS_KEY
@@ -51,6 +51,6 @@ spec:
             - name: BUILD_NUMBER
               value: "${BUILD_NUMBER}"
             - name: ALLURE_DIR
-              value: "allure-results-worker-1"
+              value: "${ALLURE_DIR}"
       restartPolicy: Never
   backoffLimit: 0
