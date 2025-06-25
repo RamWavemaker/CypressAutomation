@@ -9,15 +9,15 @@ import WorkSpacePage from "./Pages/WorkSpacePage";
 const getDownloadPath = require("../utils/pathHelper");
 
 const userCredentials = {
-  email: 'nagesh.bonagiri@wavemaker.com',
+  email: 'badrinath.chinta@wavemaker.com',
   password: 'Wavemaker@123'
 };
 
-const RUN_COUNT = 20;
+const RUN_COUNT = 10;
 
-// for (let i = 1; i <= RUN_COUNT; i++) {
+for (let i = 1; i <= RUN_COUNT; i++) {
 //clean testscases
-describe(`Appruntime Testcases`,()=>{  //${i}
+describe(`Appruntime Testcases-${i}`,()=>{  //${i}
     it(`Localization element intercept`,()=>{
         const fileName = 'WidgetsLocalisationApp.zip';
         cy.log("📦 File name being passed:", fileName);  // ✅ Add this
@@ -37,7 +37,7 @@ describe(`Appruntime Testcases`,()=>{  //${i}
             })
     })
 
-    it(`verifyIFrameDialog`, () => {
+    it(`verifyIFrameDialog-${i}`, () => {
       const fileName = 'WidgetsLocalisationApp.zip';
       const WidgetsLocalisationS3path = "wavemaker-test-apps/AutomationProjects/11.10/WidgetsLocalisationApp";
       const localDownloadPath = getDownloadPath(fileName);
@@ -51,7 +51,7 @@ describe(`Appruntime Testcases`,()=>{  //${i}
         })
     });
   
-    it(`verifyPageDialog`, () => {
+    it(`verifyPageDialog-${i}`, () => {
       const fileName = 'WidgetsLocalisationApp.zip';
       const WidgetsLocalisationS3path = "wavemaker-test-apps/AutomationProjects/11.10/WidgetsLocalisationApp";
       const localDownloadPath = getDownloadPath(fileName);
@@ -72,4 +72,4 @@ describe(`Appruntime Testcases`,()=>{  //${i}
     })
     
 })
-// }
+}

@@ -6,13 +6,13 @@ import $ from 'jquery';
 import 'cypress-iframe';
 import ProjectManager from './Pages/ProjectManager';
 //clean
-const RUN_COUNT = 20;
+const RUN_COUNT = 10;
 
-// for (let i = 1; i <= RUN_COUNT; i++) {
+for (let i = 1; i <= RUN_COUNT; i++) {
 
 
-describe(`Iframe W3Schools Test`, () => {   //-${i}
-  it(`Iframe Test`, () => {
+describe(`Iframe W3Schools Test-${i}`, () => {   //-${i}
+  it(`Iframe Test-${i}`, () => {
     cy.visit('https://www.w3schools.com/tags/tryit.asp?filename=tryhtml_iframe');
     cy.frameLoaded('#iframeResult');
     cy.iframe('#iframeResult').within(() => {
@@ -35,4 +35,4 @@ describe(`Iframe W3Schools Test`, () => {   //-${i}
     });
   });
 });
-// }
+}

@@ -12,12 +12,12 @@ const userCredentials = {
   password: 'Wavemaker@Ram123'
 };
 //clean
-// const RUN_COUNT = 20;
+const RUN_COUNT = 10;
 
 let projectName = null;
 
-// for (let i = 1; i <= RUN_COUNT; i++) {
-describe(`WidgetPropertiesTest`, () => { //${i}
+for (let i = 1; i <= RUN_COUNT; i++) {
+describe(`WidgetPropertiesTest-${i}`, () => { //${i}
 
   beforeEach(() => {
 
@@ -39,7 +39,7 @@ describe(`WidgetPropertiesTest`, () => { //${i}
 
   });
 
-  it(`selectFirstRecordInMultiSelect`, () => {
+  it(`selectFirstRecordInMultiSelect-${i}`, () => {
     LoginPage.visit("https://www.wavemakeronline.com/");
     projectName = ProjectManager.create();
     ProjectWorkspace.addDataBase('HRDB');
@@ -67,7 +67,7 @@ describe(`WidgetPropertiesTest`, () => { //${i}
 })
 
 
-describe(`ImportSampleDBTest`, () => {
+describe(`ImportSampleDBTest-${i}`, () => {
   beforeEach(() => {
 
     cy.session(
@@ -88,7 +88,7 @@ describe(`ImportSampleDBTest`, () => {
     });
 
   });
-  it(`verifyHrdbDBCrudOperations`, () => {   //success
+  it(`verifyHrdbDBCrudOperations-${i}`, () => {   //success
     cy.visit("https://www.wavemakeronline.com/");
     projectName = ProjectManager.create();
     DndWidget.performDndWidget('label','PAGE');
@@ -133,7 +133,7 @@ describe(`ImportSampleDBTest`, () => {
 })
 
 
-describe(`RestServiceTest`, () => {
+describe(`RestServiceTest-${i}`, () => {
   beforeEach(() => {
 
     cy.session(
@@ -150,7 +150,7 @@ describe(`RestServiceTest`, () => {
     });
 
   });
-  it(`importRestServiceWebApp`, () => {
+  it(`importRestServiceWebApp-${i}`, () => {
     LoginPage.visit("https://www.wavemakeronline.com/");
     projectName = ProjectManager.create();
     ApiDesginer.importRestApi('https://maps.googleapis.com/maps/api/directions/xml?origin=Toronto&destination=Montreal&sensor=false', 'googleapis', null);
@@ -208,4 +208,4 @@ afterEach(() =>{
     ProjectManager.deleteCreatedProject(projectName);
   }
 })
-// }
+}

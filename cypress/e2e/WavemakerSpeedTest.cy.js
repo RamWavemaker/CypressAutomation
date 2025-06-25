@@ -5,17 +5,17 @@ import ProjectWorkspace from './Pages/ProjectWorkspace';
 import $ from 'jquery';
 import ProjectManager from './Pages/ProjectManager';
 //clean
-const RUN_COUNT = 20;
+const RUN_COUNT = 10;
 
-// for (let i = 1; i <= RUN_COUNT; i++) {
-describe(`WaveMaker Test Suite`, () => {
+for (let i = 1; i <= RUN_COUNT; i++) {
+describe(`WaveMaker Test Suite-${i}`, () => {
     let cookies = [];
     const userCredentials = {
       email: 'test.automate11@wavemaker.com',
       password: 'Wavemaker@123'
     };
   
-    it('1. Login and Save Cookies', () => {
+    it(`1. Login and Save Cookies-${i}`, () => {
       LoginPage.visit('https://www.wavemakeronline.com');
   
       cy.title().should('eq', 'WaveMaker');
@@ -32,7 +32,7 @@ describe(`WaveMaker Test Suite`, () => {
 
     });
   
-    it(`2. Use Saved Cookies in New Session`, () => {
+    it(`2. Use Saved Cookies in New Session-${i}`, () => {
       LoginPage.visit('https://www.wavemakeronline.com');
   
       cookies.forEach((cookie) => {
@@ -47,7 +47,7 @@ describe(`WaveMaker Test Suite`, () => {
 
 
     let projectName = null;
-    it(`Verifies the title`, () => {
+    it(`Verifies the title-${i}`, () => {
           LoginPage.visit("https://www.wavemakeronline.com/");
           LoginPage.login(userCredentials.email,userCredentials.password);
           projectName = ProjectManager.create();
@@ -68,4 +68,4 @@ describe(`WaveMaker Test Suite`, () => {
         }
       })
   });
-// }
+}
