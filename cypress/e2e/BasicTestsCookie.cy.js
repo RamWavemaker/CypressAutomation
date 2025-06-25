@@ -9,9 +9,9 @@ const userCredentials = {
   password: '2907@WM#Studio'
 };
 
-const RUN_COUNT = 20;
+const RUN_COUNT = 10;
 
-// for (let i = 1; i <= RUN_COUNT; i++) {
+for (let i = 1; i <= RUN_COUNT; i++) {
 before(() => {
   cy.getCookie('auth_cookie').then((cookie) => {
     if (!cookie || !cookie.value) {
@@ -71,8 +71,8 @@ beforeEach(() => {
 
 let projectName = null;
 
-describe(`Basic Test - Cookie Based`, () => {    //-${i}
-  it(`Verifies the title and session cookies`, () => {
+describe(`Basic Test - Cookie Based-${i}`, () => {    //-${i}
+  it(`Verifies the title and session cookies-${i}`, () => {
     LoginPage.visit("https://www.wavemakeronline.com/");
     projectName = ProjectManager.create();
     DndWidget.performDndWidget('button','PAGE');
@@ -102,8 +102,8 @@ describe(`Basic Test - Cookie Based`, () => {    //-${i}
   });
 });
 
-describe(`Test LDAP - Cookie Based`, () => {
-  it(`Verifies LDAP security and cookies`, () => {
+describe(`Test LDAP - Cookie Based-${i}`, () => {
+  it(`Verifies LDAP security and cookies-${i}`, () => {
     LoginPage.visit("https://www.wavemakeronline.com/");
     projectName = ProjectManager.create();
     DndWidget.performDndWidget('button','PAGE');
@@ -163,4 +163,4 @@ describe(`Test LDAP - Cookie Based`, () => {
     }
   });
 });
-// }
+}

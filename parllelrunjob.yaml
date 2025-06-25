@@ -22,9 +22,10 @@ spec:
               set -x ;
               echo "📁 BEFORE Cypress run: contents of project root" ;
               ls;
-
+              rm -rf allure-results;
+              ls;
               echo "🚀 Running Cypress..." ;
-              echo "${ALLURE_DIR}"
+              echo "${ALLURE_DIR}";
               npx cypress run --spec "${SPEC_FILES}" --env allureResultsPath=${ALLURE_DIR} ;
               EXIT_CODE=$? ;
 
@@ -33,16 +34,16 @@ spec:
               echo "📁 AFTER Cypress run: checking ${ALLURE_DIR}" ;
               sleep 10;
               ls;
-              ls -la ${ALLURE_DIR} || echo "❌ Allure directory not found" ;
+              ls -la allure-results || echo "❌ Allure directory not found" ;
 
-              echo "☁️ Uploading to S3..." ;
-              aws s3 cp "allure-results" "s3://wm-qa-automation/${JOB_NAME}/${BUILD_NUMBER}/${ALLURE_DIR}" --recursive --acl public-read ;
+              echo "☁️ Uploading to S3....." ;
+              aws s3 cp "${ALLURE_DIR}" "s3://wm-qa-automation/${JOB_NAME}/${BUILD_NUMBER}/${ALLURE_DIR}" --recursive --acl public-read ;
 
               echo "✅ Uploaded to s3://wm-qa-automation/${JOB_NAME}/${BUILD_NUMBER}/" ;
               exit $EXIT_CODE
           env:
             - name: ALLURE_RESULTS_DIR
-              value: "allure-results-worker-1"
+              value: "${ALLURE_DIR}"
             - name: AWS_ACCESS_KEY_ID
               value: "${AWS_ACCESS_KEY_ID}"
             - name: AWS_SECRET_ACCESS_KEY
@@ -50,6 +51,6 @@ spec:
             - name: BUILD_NUMBER
               value: "${BUILD_NUMBER}"
             - name: ALLURE_DIR
-              value: "allure-results-worker-1"
+              value: "${ALLURE_DIR}"
       restartPolicy: Never
   backoffLimit: 0

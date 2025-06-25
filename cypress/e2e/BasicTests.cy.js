@@ -10,10 +10,10 @@ const userCredentials = {
   password: 'Wavemaker@123'
 };
 //clean
-const RUN_COUNT = 20;
+const RUN_COUNT = 10;
 
-// for (let i = 1; i <= RUN_COUNT; i++) {
-describe(`Basic Test`, () => {
+for (let i = 1; i <= RUN_COUNT; i++) {
+describe(`Basic Test-${i}`, () => {
   let projectName = null;
   beforeEach(() => {
 
@@ -35,7 +35,7 @@ describe(`Basic Test`, () => {
     });
     
   });
-  it(`Verifies the title`, () => {
+  it(`Verifies the title-${i}`, () => {
       LoginPage.visit("https://www.wavemakeronline.com/");
       projectName = ProjectManager.create();
       DndWidget.performDndWidget('button','PAGE');
@@ -60,7 +60,7 @@ describe(`Basic Test`, () => {
 });
 
 
-describe(`Test LDAP`, () => {
+describe(`Test LDAP-${i}`, () => {
 
   let projectName = null;
 
@@ -81,7 +81,7 @@ describe(`Test LDAP`, () => {
       Cypress.env('CJSESSIONID', cookie.value);
     });
   });
-  it(`Verifies Ldap security`, () => {
+  it(`Verifies Ldap security-${i}`, () => {
       LoginPage.visit("https://www.wavemakeronline.com/");
       projectName = ProjectManager.create();
       DndWidget.performDndWidget('button','PAGE');
@@ -129,4 +129,4 @@ describe(`Test LDAP`, () => {
   })
 
 });
-// }
+}
