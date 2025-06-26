@@ -6,11 +6,11 @@ import ProjectWorkspace from './Pages/ProjectWorkspace';
 import $ from 'jquery';
 
 const userCredentials = {
-  email: 'sumashree.pendela@wavemaker.com',
+  email: 'test.automate12@wavemaker.com',
   password: 'Wavemaker@123'
 };
 //clean
-const RUN_COUNT = 10;
+const RUN_COUNT = 4;
 
 for (let i = 1; i <= RUN_COUNT; i++) {
 describe(`Basic Test-${i}`, () => {

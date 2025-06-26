@@ -27,6 +27,7 @@ class DndWidget {
 
 
   dragAndAssert(widgetName,widgetDropSelector){
+    cy.wait(2000)
     cy.window().then((win) => {
       const script = `
         (function( $ ) {
@@ -93,7 +94,6 @@ class DndWidget {
       const dragSelector = `li[data-widget-type="wm-${widgetName}"]`;
       const dropSelector = widgetDropSelector;
       win.$(dragSelector).simulateDragDrop({ dropTarget: win.$('wms-canvas-sandbox-wrapper')[0].shadowRoot.querySelector(dropSelector)});
-      cy.wait(2000)
     });
   }
 

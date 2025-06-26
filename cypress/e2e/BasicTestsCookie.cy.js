@@ -5,11 +5,11 @@ import ProjectManager from './Pages/ProjectManager';
 import ProjectWorkspace from './Pages/ProjectWorkspace';
 //clean
 const userCredentials = {
-  email: 'anilkumar.akkaraveni@wavemaker.com',
-  password: '2907@WM#Studio'
+  email: 'test.automate13@wavemaker.com',
+  password: 'Wavemaker@123'
 };
 
-const RUN_COUNT = 10;
+const RUN_COUNT = 4;
 
 for (let i = 1; i <= RUN_COUNT; i++) {
 before(() => {

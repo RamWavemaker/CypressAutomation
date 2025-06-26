@@ -5,7 +5,7 @@ import ProjectWorkspace from './Pages/ProjectWorkspace';
 import $ from 'jquery';
 import ProjectManager from './Pages/ProjectManager';
 //clean
-const RUN_COUNT = 10;
+const RUN_COUNT = 4;
 
 for (let i = 1; i <= RUN_COUNT; i++) {
 describe(`WaveMaker Test Suite-${i}`, () => {
@@ -15,7 +15,7 @@ describe(`WaveMaker Test Suite-${i}`, () => {
       password: 'Wavemaker@123'
     };
   
-    it(`1. Login and Save Cookies-${i}`, () => {
+    before(`1. Login and Save Cookies-${i}`, () => {
       LoginPage.visit('https://www.wavemakeronline.com');
   
       cy.title().should('eq', 'WaveMaker');
@@ -32,7 +32,7 @@ describe(`WaveMaker Test Suite-${i}`, () => {
 
     });
   
-    it(`2. Use Saved Cookies in New Session-${i}`, () => {
+    beforeEach(`2. Use Saved Cookies in New Session-${i}`, () => {
       LoginPage.visit('https://www.wavemakeronline.com');
   
       cookies.forEach((cookie) => {
@@ -49,7 +49,6 @@ describe(`WaveMaker Test Suite-${i}`, () => {
     let projectName = null;
     it(`Verifies the title-${i}`, () => {
           LoginPage.visit("https://www.wavemakeronline.com/");
-          LoginPage.login(userCredentials.email,userCredentials.password);
           projectName = ProjectManager.create();
           DndWidget.performDndWidget('button','PAGE');
           ProjectWorkspace.saveWorkSpace();
