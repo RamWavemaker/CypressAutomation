@@ -9,7 +9,7 @@ const userCredentials = {
   password: 'Wavemaker@123'
 };
 
-const RUN_COUNT = 4;
+const RUN_COUNT = 10;
 
 for (let i = 1; i <= RUN_COUNT; i++) {
 before(() => {
