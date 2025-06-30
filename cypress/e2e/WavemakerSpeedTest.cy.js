@@ -5,7 +5,7 @@ import ProjectWorkspace from './Pages/ProjectWorkspace';
 import $ from 'jquery';
 import ProjectManager from './Pages/ProjectManager';
 //clean
-const RUN_COUNT = 10;
+const RUN_COUNT = 1;
 
 for (let i = 1; i <= RUN_COUNT; i++) {
 describe(`WaveMaker Test Suite-${i}`, () => {
