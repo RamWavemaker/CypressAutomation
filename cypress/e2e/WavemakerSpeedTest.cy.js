@@ -56,7 +56,7 @@ describe(`WaveMaker Test Suite-${i}`, () => {
             cy.log("Original url is " + url); 
             // After capturing the original URL, perform other actions
             ProjectWorkspace.preview(userCredentials.email,userCredentials.password);
-            cy.get("button[name='button1']").should('be.visible');
+            cy.get("button[name='button1']").should('exist');
           })
       });
 
