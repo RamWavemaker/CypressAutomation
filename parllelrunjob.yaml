@@ -60,4 +60,3 @@ spec:
             - name: ALLURE_DIR
               value: "${ALLURE_DIR}"
       restartPolicy: Never
-      backoffLimit: 0
