@@ -28,6 +28,17 @@ class FlakyTestsInSeliniumRunPage{
         }
     }
 
+    assertDialogScenario(language,heading,description,okayButton){
+        this.clickLeftPanel('Dialog');
+        cy.get("select[name='select1']").select(`français`);
+        cy.get("select[name='select1']").select(`English`);
+        cy.get("[name='button2']").click();
+        cy.get(`[aria-label="Ok"]`).should('exist').click();
+        cy.get("[name='button8']").click();
+        cy.get(`[aria-label="Ok"]`).should('exist').click();
+    }
+
+
     assertPageDialog(language,heading,description,okayButton){
         this.clickLeftPanel('Dialog');
         cy.get("select[name='select1']").select(`${language}`);

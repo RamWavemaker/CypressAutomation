@@ -8,11 +8,11 @@ import ApiDesginer from "./Pages/ApiDesginer";
 import WorkSpacePage from "./Pages/WorkSpacePage";
 
 const userCredentials = {
-    email: 'ramcharan.kasinaboina@wavemaker.com',
-    password: 'Wavemaker@Ram123'
+    email: 'test.automate12@wavemaker.com',
+    password: 'Wavemaker@123'
 };
 
-const RUN_COUNT = 1;
+const RUN_COUNT = 10;
 let projectName = null;
 
 for (let i = 1; i <= RUN_COUNT; i++) {
