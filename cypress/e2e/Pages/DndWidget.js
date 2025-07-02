@@ -27,7 +27,7 @@ class DndWidget {
 
 
   dragAndAssert(widgetName,widgetDropSelector){
-    cy.wait(2000)
+    cy.wait(5000)
     cy.window().then((win) => {
       const script = `
         (function( $ ) {

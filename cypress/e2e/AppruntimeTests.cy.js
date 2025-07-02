@@ -18,13 +18,13 @@ const RUN_COUNT = 1;
 for (let i = 1; i <= RUN_COUNT; i++) {
 //clean testscases
 describe(`Appruntime Testcases-${i}`,()=>{  //${i}
-    it(`verifyPageDialog-${i}`, () => {
+    it(`VerifyDialogScenario-${i}`, () => {
       const fileName = 'WidgetsLocalisationApp.zip';
       const WidgetsLocalisationS3path = "wavemaker-test-apps/AutomationProjects/11.10/WidgetsLocalisationApp";
       const localDownloadPath = getDownloadPath(fileName);
       AppRuntimeUtils.previewAppRuntime(userCredentials.email, userCredentials.password, fileName, WidgetsLocalisationS3path, localDownloadPath, 'PROJECT')
         .then(() => {
-          FlakyTestsInSeliniumRunPage.verifyPageDialog();
+          FlakyTestsInSeliniumRunPage.assertDialogScenario();
         }).then(() => {
           cy.get('@currentProjectId').then((projectId) => {
             ProjectManager.deleteProject(projectId);
