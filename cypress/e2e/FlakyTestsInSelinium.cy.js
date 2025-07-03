@@ -12,7 +12,7 @@ const userCredentials = {
   password: 'Wavemaker@Ram123'
 };
 //clean
-const RUN_COUNT = 10;
+const RUN_COUNT = 1;
 
 let projectName = null;
 

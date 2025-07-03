@@ -5,11 +5,11 @@ import ProjectManager from './Pages/ProjectManager';
 import ProjectWorkspace from './Pages/ProjectWorkspace';
 //clean
 const userCredentials = {
-  email: 'test.automate13@wavemaker.com',
+  email: 'test.automate11@wavemaker.com',
   password: 'Wavemaker@123'
 };
 
-const RUN_COUNT = 1;
+const RUN_COUNT = 5;
 
 for (let i = 1; i <= RUN_COUNT; i++) {
 before(() => {
@@ -93,12 +93,17 @@ describe(`Basic Test - Cookie Based-${i}`, () => {    //-${i}
   after(() => {
     cy.clearCookies(); // Optional cleanup
   });
-
-  afterEach(() => {
-    if(projectName!=null){
-      cy.wait(2000);
-      ProjectManager.deleteCreatedProject(projectName);
-    }
-  });
 });
+
+
+
+afterEach(() => {
+  if(projectName!=null){
+    cy.wait(2000);
+    ProjectManager.deleteCreatedProject(projectName);
+  }
+});
+
+
+
 }

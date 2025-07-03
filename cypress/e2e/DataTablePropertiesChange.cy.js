@@ -12,12 +12,11 @@ const userCredentials = {
     password: 'Wavemaker@123'
 };
 
-const RUN_COUNT = 1;
+const RUN_COUNT = 4;
 let projectName = null;
 
 for (let i = 1; i <= RUN_COUNT; i++) {
     describe(`DatabaseProperties-${i}`, () => { //${i}
-    
       beforeEach(() => {
     
         cy.session(
@@ -70,6 +69,20 @@ for (let i = 1; i <= RUN_COUNT; i++) {
         cy.get("a[data-searchkey='birthdate']").should('be.visible').click();
         cy.get("i[title='Properties']").should("exist").click();
         cy.get('input[name="checkboxset_null"][value="1"]').check();
+      }); 
+      
+      it(`QueryExecutionRun-${i}`, () => {
+          LoginPage.visit("https://www.wavemakeronline.com/");
+          projectName = ProjectManager.create();
+          ProjectWorkspace.addDataBase('HRDB');
+          ProjectWorkspace.goToDatabase();
+          cy.get("button[name='wm-db-query']").click();
+          cy.get('.monaco-editor textarea.inputarea')
+          .first()
+          .click({ force: true })
+          .type('SELECT * FROM employee;', { force: true, delay: 10 });
+          cy.get("button[name='btn-run-query']").click();
+          cy.get('td[title="Eric"]').should('exist');
       });
 
       afterEach(() => {
