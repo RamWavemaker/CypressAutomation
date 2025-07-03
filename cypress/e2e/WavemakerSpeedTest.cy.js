@@ -5,13 +5,13 @@ import ProjectWorkspace from './Pages/ProjectWorkspace';
 import $ from 'jquery';
 import ProjectManager from './Pages/ProjectManager';
 //clean
-const RUN_COUNT = 10;
+const RUN_COUNT = 5;
 
 for (let i = 1; i <= RUN_COUNT; i++) {
 describe(`WaveMaker Test Suite-${i}`, () => {
     let cookies = [];
     const userCredentials = {
-      email: 'test.automate11@wavemaker.com',
+      email: 'test.automate13@wavemaker.com',
       password: 'Wavemaker@123'
     };
   

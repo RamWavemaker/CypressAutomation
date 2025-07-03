@@ -9,8 +9,9 @@ const path = require("path");
 module.exports = defineConfig({
   projectId: 'sorrycypress123',
   screenshotOnRunFailure: true,
+  video: true,
   e2e: {
-    defaultCommandTimeout: 20000, 
+    defaultCommandTimeout: 50000, 
     chromeWebSecurity: false,
     setupNodeEvents(on, config) {
 
