@@ -4,6 +4,7 @@ metadata:
   name: ${KUBE_JOB_NAME}
   namespace: ${NAMESPACE}
 spec:
+  backoffLimit: 0
   template:
     spec:
       containers:
@@ -11,28 +12,17 @@ spec:
           image: ${IMAGE_NAME}
           resources:
             requests:
-              memory: "3Gi"
-              cpu: "1.5"
+              memory: "4Gi"
+              cpu: "2"
             limits:
-              memory: "3Gi"
-              cpu: "1.5"
+              memory: "4Gi"
+              cpu: "4"
           command: ["/bin/sh", "-c"]
           args:
             - >
               set -x ;
-
-              echo "🔍 Free memory before run:" ;
-              free -h || cat /proc/meminfo ;
-
-              echo "🔍 Disk usage:" ;
-              df -h / || echo "df failed" ;
-
               echo "📁 BEFORE Cypress run: contents of project root" ;
-              ls;
               rm -rf allure-results;
-              ls;
-              echo "🚀 Running Cypress..." ;
-              echo "${ALLURE_DIR}";
               npx cypress run --spec "${SPEC_FILES}" --env allureResultsPath=${ALLURE_DIR} ;
               EXIT_CODE=$? ;
 
@@ -40,8 +30,6 @@ spec:
 
               echo "📁 AFTER Cypress run: checking ${ALLURE_DIR}" ;
               sleep 10;
-              ls;
-              ls -la allure-results || echo "❌ Allure directory not found" ;
 
               echo "☁️ Uploading to S3....." ;
               aws s3 cp "${ALLURE_DIR}" "s3://wm-qa-automation/${JOB_NAME}/${BUILD_NUMBER}/${ALLURE_DIR}" --recursive --acl public-read ;
